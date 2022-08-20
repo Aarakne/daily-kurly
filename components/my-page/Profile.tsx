@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import useMe from '../../hooks/useMe'
 

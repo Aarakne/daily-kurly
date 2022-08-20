@@ -3,7 +3,7 @@ import useMe from '../../hooks/useMe'
 import Carousel from '../public/Carousel'
 
 const Wrapper = styled.div`
-  padding-top: 20px;
+  padding-top: 50px;
 
   background-color: lightgray;
 `
@@ -16,7 +16,7 @@ const Title = styled.div`
   background-color: lightsteelblue;
 `
 
-const LikedPostsContainer = styled.div`
+const CurationPostsContainer = styled.div`
   position: relative;
   overflow: hidden;
 
@@ -26,7 +26,7 @@ const CarouselItem = styled.div`
   background-color: red;
 `
 
-const Post = styled.div`
+const CurationPost = styled.div`
   /* padding: 10px; */
   display: flex;
   flex-direction: column;
@@ -52,32 +52,65 @@ const PostTitle = styled.div`
   background-color: lightcyan;
 `
 
-const LikedProducts = () => {
+const CurationKeywordContainer = styled.div`
+  padding: 20px;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  background-color: lightcyan;
+`
+
+const CurationKeyword = styled.div`
+  width: auto;
+  display: inline-block;
+
+  color: white;
+
+  margin-top: 10px;
+  padding: 10px 20px;
+
+  border-radius: 20px;
+
+  background-color: purple;
+`
+
+const Curation = () => {
   const me = useMe()
 
   return (
     me && (
       <Wrapper>
         <Title>
-          {me.name} 님이 {'❤️'}한 요리
+          {me.name} 님이 관심 많은 <br />{' '}
+          <span style={{ color: 'red' }}>{'한식'}</span> 인기 요리에요 😝
         </Title>
-        <LikedPostsContainer>
+        <CurationPostsContainer>
           <Carousel autoplay={false} slidesToShow={3}>
             {me.likedPosts.map((post, index) => (
               <CarouselItem key={index}>
-                <Post key={index}>
+                <CurationPost key={index}>
                   <PostImageContainer>
                     {/* <Image src={post.ImageUrl} /> */}
                   </PostImageContainer>
                   <PostTitle>{post.title}</PostTitle>
-                </Post>
+                </CurationPost>
               </CarouselItem>
             ))}
           </Carousel>
-        </LikedPostsContainer>
+        </CurationPostsContainer>
+
+        <CurationKeywordContainer>
+          <span style={{ color: 'red' }}>
+            {'난이도가 높고'},<br />
+            {'소요시간이 긴'}
+          </span>{' '}
+          요리를 좋아하시네요 😀
+          <CurationKeyword>{'찜질방 고수'}</CurationKeyword>
+        </CurationKeywordContainer>
       </Wrapper>
     )
   )
 }
 
-export default LikedProducts
+export default Curation
