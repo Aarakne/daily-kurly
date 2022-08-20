@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import useMe from '../../hooks/useMe'
 
 const Wrapper = styled.div`
@@ -45,6 +46,7 @@ const PostSetting = styled.div`
 `
 
 const Profile = () => {
+  const router = useRouter()
   const me = useMe()
 
   return (
@@ -61,7 +63,9 @@ const Profile = () => {
             </PostInfo>
           </Content>
         </ProfileContainer>
-        <PostSetting>게시물 관리 {'>'}</PostSetting>
+        <PostSetting onClick={() => router.push('/posts/setting')}>
+          게시물 관리 {'>'}
+        </PostSetting>
       </Wrapper>
     )
   )

@@ -1,5 +1,5 @@
 import api from '../api'
-
+import { Post } from './posts'
 export interface Me {
   id: number
   name: string
@@ -7,10 +7,6 @@ export interface Me {
   likedPosts: Post[]
   posts: number
   view: number
-}
-
-interface Post {
-  title: string
 }
 
 export const fetchMe = async (): Promise<Me> => {
