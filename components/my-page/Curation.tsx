@@ -86,7 +86,7 @@ const Curation = () => {
           <span style={{ color: 'red' }}>{'한식'}</span> 인기 요리에요 😝
         </Title>
         <CurationPostsContainer>
-          <Carousel autoplay={false} slidesToShow={3}>
+          <Carousel autoplay={false} slidesToShow={2.5} infinite={false}>
             {me.likedPosts.map((post, index) => (
               <CarouselItem key={index}>
                 <CurationPost key={index}>

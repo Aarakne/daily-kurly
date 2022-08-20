@@ -62,7 +62,7 @@ const LikedProducts = () => {
           {me.name} 님이 {'❤️'}한 요리
         </Title>
         <LikedPostsContainer>
-          <Carousel autoplay={false} slidesToShow={3}>
+          <Carousel autoplay={false} slidesToShow={2.5} infinite={false}>
             {me.likedPosts.map((post, index) => (
               <CarouselItem key={index}>
                 <Post key={index}>
