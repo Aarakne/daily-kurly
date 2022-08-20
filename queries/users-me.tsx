@@ -4,9 +4,13 @@ export interface Me {
   id: number
   name: string
   profileImage: string
-  likedPosts: object
+  likedPosts: Post[]
   posts: number
   view: number
+}
+
+interface Post {
+  title: string
 }
 
 export const fetchMe = async (): Promise<Me> => {

@@ -49,7 +49,7 @@ export default function Header({
     <Wrapper backgroundColor={backgroundColor}>
       <Left
         onClick={() => {
-          router.push('/')
+          router.back()
         }}
       >
         {left}

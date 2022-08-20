@@ -15,7 +15,11 @@ const useMe = (): Me | null => {
     id: 394662,
     name: '전인화아',
     profileImage: 'ImageLink',
-    likedPosts: ['postId_1', 'postId_2', 'postId_3'],
+    likedPosts: [
+      { title: 'postId_1' },
+      { title: 'postId_2' },
+      { title: 'postId_3' },
+    ],
     posts: 13,
     view: 1343,
   }
