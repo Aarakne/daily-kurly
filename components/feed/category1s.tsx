@@ -4,15 +4,30 @@ import Category1 from './category1'
 const CATEGORYS = ['재료별', '상황/난이도별', '음식분류별']
 
 const Wrapper = styled.div`
-  d
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 15px;
+
+  border-bottom: 1px solid #eee;
+`
+
+const Box = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  min-width: 300px;
+  max-width: 375px;
 `
 
 const Category1s = () => {
   return (
     <Wrapper>
-      {CATEGORYS.map((category) => (
-        <Category1 key={category} categoryTitle={category} />
-      ))}
+      <Box>
+        {CATEGORYS.map((category) => (
+          <Category1 key={category} categoryTitle={category} />
+        ))}
+      </Box>
     </Wrapper>
   )
 }

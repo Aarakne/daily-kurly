@@ -4,15 +4,25 @@ interface Category1Props {
   categoryTitle: string
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 
-const Box = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #f2f2f2;
+  align-items: center;
 `
 
-const Title = styled.p``
+const Box = styled.div`
+  width: 70px;
+  height: 70px;
+
+  background-color: #f2f2f2;
+
+  border-radius: 8px;
+`
+
+const Title = styled.p`
+  font-size: 13.5px;
+`
 
 const Category1 = ({ categoryTitle }: Category1Props) => {
   return (
