@@ -36,7 +36,7 @@ const Post = styled.div`
   background-color: lightseagreen;
 `
 
-const PostImageContainer = styled.div`
+const PostImage = styled.div`
   width: 100px;
   height: 100px;
 
@@ -65,10 +65,8 @@ const LikedProducts = () => {
           <Carousel autoplay={false} slidesToShow={2.5} infinite={false}>
             {me.likedPosts.map((post, index) => (
               <CarouselItem key={index}>
-                <Post key={index}>
-                  <PostImageContainer>
-                    {/* <Image src={post.ImageUrl} /> */}
-                  </PostImageContainer>
+                <Post>
+                  <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
                   <PostTitle>{post.title}</PostTitle>
                 </Post>
               </CarouselItem>
