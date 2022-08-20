@@ -11,12 +11,15 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@types/react-slick": "^0.23.10",
     "axios": "^0.27.2",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
-    "recoil": "^0.7.5"
+    "react-slick": "^0.29.0",
+    "recoil": "^0.7.5",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/node": "18.7.6",
