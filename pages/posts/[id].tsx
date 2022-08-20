@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
+import type { NextPage } from 'next'
 
 const Posts: NextPage = () => {
-  return <div>게시글 상세</div>;
-};
+  return <div>게시글 상세</div>
+}
 
-export default Posts;
+export default Posts
