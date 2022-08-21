@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div`
-  max-width: 200px;
-
   // 임시
   height: 200px;
 
