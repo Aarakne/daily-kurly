@@ -5,7 +5,6 @@ interface HeaderProps {
   title: string
   left: string
   right: string
-  backgroundColor?: string
 }
 
 interface WrapperProps {
@@ -27,9 +26,8 @@ const Wrapper = styled.div<WrapperProps>`
   align-items: center;
   padding: 0 3.2vw;
 
-  background-color: ${(props) => props.backgroundColor ?? '#fff'};
+  background-color: white;
 
-  color: ${(props) => (props.backgroundColor ? '#fff' : 'black')};
   font-weight: bold;
 `
 
@@ -37,16 +35,11 @@ const Left = styled.div``
 const Center = styled.div``
 const Right = styled.div``
 
-export default function Header({
-  title,
-  left,
-  right,
-  backgroundColor,
-}: HeaderProps) {
+export default function Header({ title, left, right }: HeaderProps) {
   const router = useRouter()
 
   return (
-    <Wrapper backgroundColor={backgroundColor}>
+    <Wrapper>
       <Left
         onClick={() => {
           router.back()

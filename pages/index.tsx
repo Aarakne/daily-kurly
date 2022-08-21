@@ -1,16 +1,18 @@
 import type { NextPage } from 'next'
-import Container from '../components/public/Container'
-
+import { useRouter } from 'next/router'
 const Home: NextPage = () => {
+  const router = useRouter()
   return (
-    <Container
-      headerLeft=""
-      headerTitle="Daily Kurly"
-      headerRight="My"
-      headerBackgroundColor="#5f0080"
-    >
-      피드
-    </Container>
+    <>
+      <div>피드</div>
+      <div
+        onClick={() => {
+          router.push('/my-page')
+        }}
+      >
+        My Daily
+      </div>
+    </>
   )
 }
 

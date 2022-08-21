@@ -7,23 +7,10 @@ interface ContainerProps {
   headerTitle: string
   headerLeft: string
   headerRight: string
-  headerBackgroundColor?: string
+  isHeader: boolean
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-width: 100vw;
-`
-
 const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  background-color: white;
-
   margin-top: 50px;
 `
 
@@ -32,17 +19,14 @@ export default function Container({
   headerTitle,
   headerLeft,
   headerRight,
-  headerBackgroundColor,
+  isHeader,
 }: ContainerProps) {
   return (
-    <Wrapper>
-      <Header
-        title={headerTitle}
-        left={headerLeft}
-        right={headerRight}
-        backgroundColor={headerBackgroundColor}
-      />
+    <>
+      {isHeader && (
+        <Header title={headerTitle} left={headerLeft} right={headerRight} />
+      )}
       <Content>{children}</Content>
-    </Wrapper>
+    </>
   )
 }
