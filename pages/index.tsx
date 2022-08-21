@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import Category1s from '../components/feed/category1s'
-import Category2s from '../components/feed/category2s'
+import Category1s from '../components/feed/Category1s'
+import Category2s from '../components/feed/Category2s'
 import FeedItems from '../components/feed/FeedItems'
-import FloatingButton from '../components/public/FloatingButton'
+import FloatingButtons from '../components/public/FloatingButtons'
 
 const Home: NextPage = () => {
   return (
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       <Category1s />
       <Category2s />
       <FeedItems />
-      <FloatingButton />
+      <FloatingButtons />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import Category2 from './category2'
 import FilterIcon from '../../assets/filter.svg'
+import Category2 from './Category2'
 
 const CATEGORYS = ['한식', '중식', '일식', '양식', '디저트']
 

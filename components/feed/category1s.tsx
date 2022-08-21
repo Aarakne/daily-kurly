@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Category1 from './category1'
+import Category1 from './Category1'
 
 const CATEGORYS = ['재료별', '상황/난이도별', '음식분류별']
 
