@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
 import useMe from '../../hooks/useMe'
 
 const Wrapper = styled.div`
@@ -12,6 +11,8 @@ const Wrapper = styled.div`
 `
 
 const ProfileContainer = styled.div`
+  width: 100%;
+
   display: flex;
   align-items: center;
 
@@ -21,32 +22,33 @@ const ProfileContainer = styled.div`
 const ProfileImageContainer = styled.div`
   width: 70px;
   height: 70px;
+
   background-color: lightblue;
 
   border-radius: 50px;
 `
 
 const Content = styled.div`
+  flex: 1;
+
+  margin-left: 20px;
   background-color: lightcyan;
 `
 
 const Name = styled.div`
-  background-color: lightcoral;
+  font-size: 18px;
+  font-weight: bold;
 `
+
 const PostInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding-top: 10px;
 
   background-color: lightgray;
 `
 
-const PostSetting = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: lightyellow;
-`
-
 const Profile = () => {
-  const router = useRouter()
   const me = useMe()
 
   return (
@@ -59,13 +61,12 @@ const Profile = () => {
           <Content>
             <Name>{me.name}</Name>
             <PostInfo>
-              게시글 {me.posts}개 | 조회수 {me.view}회
+              <div>게시글 {me.posts}개</div>
+              <div>조회수 {me.view}회</div>
+              <div>팔로우 ?</div>
             </PostInfo>
           </Content>
         </ProfileContainer>
-        <PostSetting onClick={() => router.push('/posts/setting')}>
-          게시물 관리 {'>'}
-        </PostSetting>
       </Wrapper>
     )
   )
