@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import useMe from '../../hooks/useMe'
-import Carousel from '../public/Carousel'
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -17,13 +16,16 @@ const Title = styled.div`
 `
 
 const LikedPostsContainer = styled.div`
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  overflow: auto;
+
+  padding: 20px;
 
   background-color: lightblue;
-`
-const CarouselItem = styled.div`
-  background-color: red;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Post = styled.div`
@@ -44,7 +46,6 @@ const PostImage = styled.div`
 `
 
 const PostTitle = styled.div`
-  margin-top: 10px;
   padding: 10px;
 
   text-align: center;
@@ -62,16 +63,12 @@ const LikedProducts = () => {
           {me.name} 님이 {'❤️'}한 요리
         </Title>
         <LikedPostsContainer>
-          <Carousel autoplay={false} slidesToShow={2.5} infinite={false}>
-            {me.likedPosts.map((post, index) => (
-              <CarouselItem key={index}>
-                <Post>
-                  <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
-                  <PostTitle>{post.title}</PostTitle>
-                </Post>
-              </CarouselItem>
-            ))}
-          </Carousel>
+          {me.likedPosts.map((post, index) => (
+            <Post key={index}>
+              <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
+              <PostTitle>{post.title}</PostTitle>
+            </Post>
+          ))}
         </LikedPostsContainer>
       </Wrapper>
     )

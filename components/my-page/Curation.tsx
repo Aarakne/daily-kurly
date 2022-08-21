@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import useMe from '../../hooks/useMe'
-import Carousel from '../public/Carousel'
 
 const Wrapper = styled.div`
   padding-top: 50px;
@@ -17,16 +16,18 @@ const Title = styled.div`
 `
 
 const CurationPostsContainer = styled.div`
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  overflow: auto;
+
+  padding: 20px;
 
   background-color: lightblue;
-`
-const CarouselItem = styled.div`
-  background-color: red;
-`
 
-const CurationPost = styled.div`
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+const Post = styled.div`
   /* padding: 10px; */
   display: flex;
   flex-direction: column;
@@ -36,7 +37,7 @@ const CurationPost = styled.div`
   background-color: lightseagreen;
 `
 
-const PostImageContainer = styled.div`
+const PostImage = styled.div`
   width: 100px;
   height: 100px;
 
@@ -44,7 +45,6 @@ const PostImageContainer = styled.div`
 `
 
 const PostTitle = styled.div`
-  margin-top: 10px;
   padding: 10px;
 
   text-align: center;
@@ -86,18 +86,12 @@ const Curation = () => {
           <span style={{ color: 'red' }}>{'한식'}</span> 인기 요리에요 😝
         </Title>
         <CurationPostsContainer>
-          <Carousel autoplay={false} slidesToShow={2.5} infinite={false}>
-            {me.likedPosts.map((post, index) => (
-              <CarouselItem key={index}>
-                <CurationPost key={index}>
-                  <PostImageContainer>
-                    {/* <Image src={post.ImageUrl} /> */}
-                  </PostImageContainer>
-                  <PostTitle>{post.title}</PostTitle>
-                </CurationPost>
-              </CarouselItem>
-            ))}
-          </Carousel>
+          {me.likedPosts.map((post, index) => (
+            <Post key={index}>
+              <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
+              <PostTitle>{post.title}</PostTitle>
+            </Post>
+          ))}
         </CurationPostsContainer>
 
         <CurationKeywordContainer>
