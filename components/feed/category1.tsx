@@ -1,4 +1,6 @@
 import styled from '@emotion/styled'
+import { useSetRecoilState } from 'recoil'
+import { isOpenedSheetState, selectedCategory1State } from '../../stores/sheet'
 
 interface Category1Props {
   categoryTitle: string
@@ -25,8 +27,17 @@ const Title = styled.p`
 `
 
 const Category1 = ({ categoryTitle }: Category1Props) => {
+  const setIsOpendedSheet = useSetRecoilState(isOpenedSheetState)
+  const setSelectedCategory1 = useSetRecoilState(selectedCategory1State)
+
+  const onClickCategory = () => {
+    console.log('clicked', categoryTitle)
+    setIsOpendedSheet(true)
+    setSelectedCategory1(categoryTitle)
+  }
+
   return (
-    <Wrapper>
+    <Wrapper onClick={onClickCategory}>
       <Box />
       <Title>{categoryTitle}</Title>
     </Wrapper>
