@@ -7,12 +7,9 @@ import api from '../api'
 import Category2s from '../components/feed/Category2s'
 import FeedItem from '../components/feed/FeedItem'
 import FeedItems from '../components/feed/FeedItems'
-import BottomSheet from '../components/public/BottomSheet'
 import FloatingButtons from '../components/public/FloatingButtons'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import { isOpenedSheetState } from '../stores/sheet'
-
-const CATEGORY_1S = ['재료별', '상황/난이도별', '음식분류별']
 
 const Wrapper = styled.div`
   position: relative;
@@ -67,7 +64,11 @@ const Home: NextPage = () => {
       ) : posts && posts.length > 0 ? (
         <FeedItems>
           {posts.map((post) => (
-            <FeedItem key={post._id} feedItem={post.content.images[0]} />
+            <FeedItem
+              key={post._id}
+              id={post._id}
+              image={post.content.images[0]}
+            />
           ))}
           {hasNextPage && <div ref={lastItemRef} />}
         </FeedItems>
@@ -75,7 +76,6 @@ const Home: NextPage = () => {
         <div>게시글이 없어요</div>
       )}
       <FloatingButtons />
-      <BottomSheet />
     </Wrapper>
   )
 }
