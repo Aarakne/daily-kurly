@@ -18,7 +18,7 @@ const Wrapper = styled.div<WrapperProps>`
   position: fixed;
   overflow: hidden;
   z-index: 999;
-  top: 0;
+  top: 40px;
 
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;

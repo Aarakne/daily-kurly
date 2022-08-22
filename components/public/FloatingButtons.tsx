@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   gap: 6px;
 
   right: 4vw;
-  bottom: 30px;
+  bottom: 55px;
 `
 
 const FloatingButton = styled.button`
