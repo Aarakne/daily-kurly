@@ -1,5 +1,10 @@
 import styled from '@emotion/styled'
+import { ReactNode } from 'react'
 import FeedItem from './FeedItem'
+
+interface FeedItemsProps {
+  children: ReactNode[]
+}
 
 const FEED_ITEMS_MOCKUP = Array(30)
   .fill(0)
@@ -22,14 +27,10 @@ const Box = styled.div`
   gap: 15px;
 `
 
-const FeedItems = () => {
+const FeedItems = ({ children }: FeedItemsProps) => {
   return (
     <Wrapper>
-      <Box>
-        {FEED_ITEMS_MOCKUP.map((feedItem) => (
-          <FeedItem key={feedItem} feedItem={feedItem} />
-        ))}
-      </Box>
+      <Box>{children}</Box>
     </Wrapper>
   )
 }
