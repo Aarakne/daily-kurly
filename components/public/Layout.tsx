@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import Logo from '../../assets/kurly.svg'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 interface LayoutProps {
   children: ReactNode
@@ -41,7 +42,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <Wrapper>
       <Top>
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
       </Top>
       <Content>{children}</Content>
       <Bottom></Bottom>
