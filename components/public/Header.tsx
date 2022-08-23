@@ -4,7 +4,6 @@ import ArrowBackIcon from '../../assets/arrow-back.svg'
 
 interface HeaderProps {
   title: string
-  right?: string
 }
 
 interface WrapperProps {
@@ -32,11 +31,8 @@ const Wrapper = styled.div<WrapperProps>`
 
 const Left = styled.div``
 const Center = styled.div``
-const Right = styled.div`
-  padding-right: 3vw;
-`
 
-export default function Header({ title, right }: HeaderProps) {
+export default function Header({ title }: HeaderProps) {
   const router = useRouter()
 
   return (
@@ -49,15 +45,6 @@ export default function Header({ title, right }: HeaderProps) {
         <ArrowBackIcon />
       </Left>
       <Center>{title}</Center>
-      {right && (
-        <Right
-          onClick={() => {
-            router.push('/my-page')
-          }}
-        >
-          {right}
-        </Right>
-      )}
     </Wrapper>
   )
 }

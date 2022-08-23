@@ -297,12 +297,7 @@ const Posts: NextPage = () => {
 
   return (
     me && (
-      <Container
-        headerLeft="<"
-        headerTitle="Daily Kurly"
-        headerRight=""
-        isHeader={true}
-      >
+      <Container headerTitle="Daily Kurly">
         <ProfileContainer>
           <ProfileImageContainer>
             {/* <Image src={me.profileImage} /> */}
