@@ -15,14 +15,14 @@ interface BoxStyledType {
 }
 
 const Box = styled.div<BoxStyledType>`
-  height: 22px;
-  padding: 0 10px;
+  height: 25px;
+  padding: 0 12px;
 
   display: flex;
   align-items: center;
   flex-shrink: 0;
 
-  font-size: 12px;
+  font-size: 14px;
   color: #afabab;
 
   border: 1px solid #afabab;
@@ -31,7 +31,7 @@ const Box = styled.div<BoxStyledType>`
   ${({ isSelected }) => isSelected && `background-color: #5f0080; color: #fff;`}
 `
 
-const Category2 = ({ categoryTitle }: Category2Props) => {
+const Category1 = ({ categoryTitle }: Category2Props) => {
   const [selectedCategory1s, setSelectedCategory1s] = useRecoilState(
     selectedCategory1sState,
   )
@@ -58,4 +58,4 @@ const Category2 = ({ categoryTitle }: Category2Props) => {
   )
 }
 
-export default Category2
+export default Category1
