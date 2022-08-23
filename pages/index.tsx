@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useEffect, useMemo, useRef } from 'react'
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from 'react-query'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import api from '../api'
 import Category1s from '../components/feed/Category1s'
@@ -11,8 +11,10 @@ import FloatingButtons from '../components/public/FloatingButtons'
 import useAuth from '../hooks/useAuth'
 import useCategories from '../hooks/useCategories'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
+import { fetchLikedPosts } from '../queries/posts'
 import { loggedInState } from '../stores/auth'
 import { selectedCategory1sState } from '../stores/categories'
+import { likedPostsState } from '../stores/like'
 import { isOpenedSheetState } from '../stores/sheet'
 
 interface CategoryType {
@@ -39,6 +41,7 @@ const Home: NextPage = () => {
   const { signUp, login } = useAuth()
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
+  const [likedPosts, setLikedPosts] = useRecoilState(likedPostsState)
   const selectedCategory1s = useRecoilValue(selectedCategory1sState)
   const isOpenedSheet = useRecoilValue(isOpenedSheetState)
 
@@ -54,6 +57,12 @@ const Home: NextPage = () => {
       },
     },
   )
+
+  useQuery(['liked-posts'], fetchLikedPosts, {
+    onSuccess: (data) => {
+      setLikedPosts(data)
+    },
+  })
 
   useInfiniteScroll({
     target: lastItemRef,
@@ -105,6 +114,9 @@ const Home: NextPage = () => {
               key={post._id}
               id={post._id}
               image={post.content.images[0]}
+              liked={
+                !!likedPosts.find((likedPost) => likedPost._id === post._id)
+              }
             />
           ))}
           {hasNextPage && <div ref={lastItemRef} />}

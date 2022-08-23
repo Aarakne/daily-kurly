@@ -213,6 +213,8 @@ const Posts: NextPage = () => {
 
   const onClickSheetButton = () => {
     setIsOpendedSheet(true)
+    setSelectedCategory1('')
+    setSelectedCategory2('')
   }
 
   const onSubmit = () => {
