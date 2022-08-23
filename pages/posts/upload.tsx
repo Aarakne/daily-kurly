@@ -137,24 +137,9 @@ const SubmitButton = styled.button`
 
 const Posts: NextPage = () => {
   const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
-  const setCategory1s = useSetRecoilState(category1sState)
-  const setCategory2s = useSetRecoilState(category2sState)
 
   const [images, setImages] = useState<FileList | null>(null)
   const [imageUrls, setImageUrls] = useState<string[]>([])
-
-  const getCategories = async () => {
-    const {
-      data: { category1s, category2s },
-    } = await api.get('/meta/posts/categories')
-
-    setCategory1s(category1s)
-    setCategory2s(category2s)
-  }
-
-  useEffect(() => {
-    getCategories()
-  }, [])
 
   const onChangeImages: FormEventHandler<HTMLLabelElement> = (e) => {
     const target = e.target as HTMLInputElement

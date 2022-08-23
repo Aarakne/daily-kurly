@@ -14,7 +14,9 @@ const useAuth = () => {
       username: process.env.NEXT_PUBLIC_USER_NAME,
       password: process.env.NEXT_PUBLIC_PASSWORD,
     })
-    return res.status === 200
+
+    // login success || already logged in
+    return res.status === 200 || res.status === 403
   }
 
   return { signUp, login }

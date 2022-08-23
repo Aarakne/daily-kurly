@@ -5,14 +5,19 @@ export const isOpenedSheetState = atom<boolean>({
   default: false,
 })
 
-export const category1sState = atom({
+export const category1sState = atom<string[]>({
   key: 'category-1s',
-  default: null,
+  default: [],
 })
 
-export const category2sState = atom({
+export const category2sState = atom<string[]>({
   key: 'category-2s',
-  default: null,
+  default: [],
+})
+
+export const selectedCategory1sState = atom<string[]>({
+  key: 'selected-category-1s',
+  default: [],
 })
 
 export const selectedCategory1State = atom<string>({
