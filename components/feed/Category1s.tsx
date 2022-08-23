@@ -28,7 +28,7 @@ const Category1s = () => {
     <Wrapper>
       <Box>
         {category1s?.map((category) => (
-          <Category1 key={category} categoryTitle={category} />
+          <Category1 key={category.tag} categoryTitle={category.tag} />
         ))}
       </Box>
     </Wrapper>

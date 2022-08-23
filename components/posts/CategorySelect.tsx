@@ -89,8 +89,11 @@ const CategorySelect = () => {
   return selectedCategory1 === '' ? (
     <SelectCategory1>
       {category1s?.map((category) => (
-        <Category1 key={category} onClick={() => onSelectCategory1(category)}>
-          {category}
+        <Category1
+          key={category.tag}
+          onClick={() => onSelectCategory1(category.tag)}
+        >
+          {category.tag}
         </Category1>
       ))}
     </SelectCategory1>

@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 const fetchPosts = async (pageParam: number, selectedCategory1s: string[]) => {
   const params = {
     page: pageParam,
-    cat2: selectedCategory1s,
+    cat1: selectedCategory1s,
   }
   const { data } = await api.get('post/list', { params })
 

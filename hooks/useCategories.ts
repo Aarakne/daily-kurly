@@ -1,23 +1,16 @@
 import { useSetRecoilState } from 'recoil'
-import { category1sState, category2sState } from '../stores/categories'
+import { category1sState } from '../stores/categories'
 import api from '../api'
-
-interface CategoryType {
-  _id: string
-  tag: string
-}
 
 const useCategories = () => {
   const setCategory1s = useSetRecoilState(category1sState)
-  const setCategory2s = useSetRecoilState(category2sState)
 
   const getCategories = async () => {
     const {
-      data: { category1s, category2s },
+      data: { categories },
     } = await api.get('/meta/posts/categories')
 
-    setCategory1s(category1s.map((item: CategoryType) => item.tag))
-    setCategory2s(category2s.map((item: CategoryType) => item.tag))
+    setCategory1s(categories)
   }
 
   return getCategories
