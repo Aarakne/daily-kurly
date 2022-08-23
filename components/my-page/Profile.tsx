@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { useRecoilValue } from 'recoil'
 import { fetchMyPosts } from '../../queries/posts'
 import { userState } from '../../stores/auth'
+import ProfileIcon from '../../assets/profile.svg'
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
 
   padding: 10px;
 
-  background-color: gray;
+  border-bottom: 3px solid gray;
 `
 
 const ProfileContainer = styled.div`
@@ -19,16 +20,12 @@ const ProfileContainer = styled.div`
 
   display: flex;
   align-items: center;
-
-  background-color: black;
 `
 
 const ProfileImageContainer = styled.div`
-  width: 70px;
-  height: 70px;
+  padding: 20px;
 
-  background-color: lightblue;
-
+  border: 2px solid lightgray;
   border-radius: 50px;
 `
 
@@ -36,11 +33,10 @@ const Content = styled.div`
   flex: 1;
 
   margin-left: 20px;
-  background-color: lightcyan;
 `
 
 const Name = styled.div`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `
 
@@ -48,14 +44,11 @@ const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
-
-  background-color: lightgray;
 `
 
 const Profile = () => {
   const me = useRecoilValue(userState)
-  // {grade: "purple"
-  // name: "lee123"}
+  //   const me = { grade: 'purple', name: 'lee123' }
 
   const { data: posts } = useQuery(['fetchMyPost'], fetchMyPosts, {
     staleTime: 60 * 1000,
@@ -70,7 +63,7 @@ const Profile = () => {
     <Wrapper>
       <ProfileContainer>
         <ProfileImageContainer>
-          {/* <Image src={me.profileImage} /> */}
+          <ProfileIcon />
         </ProfileImageContainer>
         <Content>
           <Name>{me?.name}</Name>
