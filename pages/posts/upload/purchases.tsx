@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilState } from 'recoil'
 import api from '../../../api'
 import Product from '../../../components/posts/Product'
 import Header from '../../../components/public/Header'
-import { useSetRecoilState } from 'recoil'
 import { ProductType, selectedProductsState } from '../../../stores/upload'
-import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   padding-top: 50px;
@@ -68,9 +68,10 @@ const Purchases: NextPage = () => {
     async () => await api.get('/me/products'),
   )
 
-  const setProducts = useSetRecoilState(selectedProductsState)
+  const [products, setProducts] = useRecoilState(selectedProductsState)
 
-  const [selectedProducts, setSelectedProducts] = useState<ProductType[]>([])
+  const [selectedProducts, setSelectedProducts] =
+    useState<ProductType[]>(products)
 
   const onCheck = (product: ProductType) => {
     setSelectedProducts([...selectedProducts, product])
