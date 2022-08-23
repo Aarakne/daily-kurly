@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `
 
 const fetchPosts = async (pageParam: number) => {
-  const { data } = await api.get(`post/list/${pageParam}`)
+  const { data } = await api.get(`post/list?page=${pageParam}`)
 
   return data
 }
