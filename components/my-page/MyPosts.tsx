@@ -75,7 +75,7 @@ const CurationKeyword = styled.div`
   background-color: purple;
 `
 
-const Curation = () => {
+const MyPosts = () => {
   const me = useMe()
 
   return (
@@ -107,4 +107,4 @@ const Curation = () => {
   )
 }
 
-export default Curation
+export default MyPosts
