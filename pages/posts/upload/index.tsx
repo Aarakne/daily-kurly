@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { FormEventHandler, useState } from 'react'
+import { FormEventHandler, useEffect, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import CategorySelect from '../../../components/posts/CategorySelect'
 import BottomSheet from '../../../components/public/BottomSheet'
@@ -12,6 +12,7 @@ import FolderAddIcon from '../../../assets/folder-add.svg'
 import PlusSquareIcon from '../../../assets/plus-square.svg'
 import Link from 'next/link'
 import { selectedProductsState } from '../../../stores/upload'
+import useCategories from '../../../hooks/useCategories'
 
 const IMAGE_SIZE = 80
 const IMAGE_SIZE_SM = 50
@@ -83,17 +84,6 @@ const TextInput = styled.input`
   outline: 0;
 `
 
-const TagInput = styled.input`
-  width: 100%;
-  height: 50px;
-
-  font-size: 16px;
-
-  border: 0;
-  padding: 0;
-  outline: 0;
-`
-
 const SheetButton = styled.div`
   width: 100%;
   height: 50px;
@@ -146,13 +136,43 @@ const ProductPreview = styled.div`
   overflow-x: scroll;
 `
 
+const TagForm = styled.div`
+  width: 100%;
+  height: 50px;
+
+  padding: 12px 0;
+
+  font-size: 16px;
+  color: #5f0080;
+`
+
+const TagInput = styled.input`
+  font-size: 16px;
+  color: #333;
+`
+
+const TextAreaInput = styled.textarea`
+  width: 100%;
+  height: 100px;
+
+  font-size: 16px;
+
+  border: 0;
+  padding: 11.5px 0;
+  border-bottom: 2px solid #eee;
+  outline: 0;
+`
+
 const Posts: NextPage = () => {
+  const getCategories = useCategories()
   const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
   const selectedProducts = useRecoilValue(selectedProductsState)
 
   const [title, setTitle] = useState<string>('')
   const [images, setImages] = useState<FileList | null>(null)
   const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [text, setText] = useState<string>('')
+  const [tags, setTags] = useState<string>('')
 
   const onChangeImages: FormEventHandler<HTMLLabelElement> = (e) => {
     const target = e.target as HTMLInputElement
@@ -168,6 +188,10 @@ const Posts: NextPage = () => {
     setImages(files)
     setImageUrls(fileUrls.slice(0, 10))
   }
+
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   return (
     <div>
@@ -225,7 +249,19 @@ const Posts: NextPage = () => {
             </ProductPreview>
           )}
         </ProductSelect>
-        <TagInput type="text" placeholder="#요리태그" />
+        <TextAreaInput
+          placeholder="요리설명"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <TagForm>
+          <TagInput
+            type="text"
+            placeholder="#요리태그"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+          />
+        </TagForm>
         <SubmitButton type="button">등록</SubmitButton>
       </Form>
       <BottomSheet>

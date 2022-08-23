@@ -2,21 +2,17 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useInfiniteQuery } from 'react-query'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import api from '../api'
 import Category1s from '../components/feed/Category1s'
 import FeedItem from '../components/feed/FeedItem'
 import FeedItems from '../components/feed/FeedItems'
 import FloatingButtons from '../components/public/FloatingButtons'
 import useAuth from '../hooks/useAuth'
+import useCategories from '../hooks/useCategories'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import { loggedInState } from '../stores/auth'
-import {
-  category1sState,
-  category2sState,
-  isOpenedSheetState,
-  selectedCategory1sState,
-} from '../stores/sheet'
+import { isOpenedSheetState, selectedCategory1sState } from '../stores/sheet'
 
 interface CategoryType {
   _id: string
@@ -38,11 +34,10 @@ const fetchPosts = async (pageParam: number, selectedCategory1s: string[]) => {
 }
 
 const Home: NextPage = () => {
+  const getCategories = useCategories()
   const { signUp, login } = useAuth()
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
-  const setCategory1s = useSetRecoilState(category1sState)
-  const setCategory2s = useSetRecoilState(category2sState)
   const selectedCategory1s = useRecoilValue(selectedCategory1sState)
   const isOpenedSheet = useRecoilValue(isOpenedSheetState)
 
@@ -92,15 +87,6 @@ const Home: NextPage = () => {
 
     checkLoginStatus()
   }, [loggedIn])
-
-  const getCategories = async () => {
-    const {
-      data: { category1s, category2s },
-    } = await api.get('/meta/posts/categories')
-
-    setCategory1s(category1s.map((item: CategoryType) => item.tag))
-    setCategory2s(category2s.map((item: CategoryType) => item.tag))
-  }
 
   useEffect(() => {
     getCategories()
