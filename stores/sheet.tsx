@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 
 export const isOpenedSheetState = atom<boolean>({
   key: 'is-opened-option',
-  default: true,
+  default: false,
 })
 
 export const selectedCategory1State = atom<string>({

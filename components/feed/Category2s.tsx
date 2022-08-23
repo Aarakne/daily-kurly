@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 0 4vw;
+  padding: 4vw;
 `
 
 const Box = styled.div`

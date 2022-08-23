@@ -1,12 +1,17 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
+import FeedItem from './FeedItem'
+
+interface FeedItemsProps {
+  children: ReactNode[]
+}
 
 const FEED_ITEMS_MOCKUP = Array(30)
   .fill(0)
   .map((_, i) => i)
 
 const Wrapper = styled.div`
-  padding: 4.5vw;
+  padding: 0 4.5vw;
   display: flex;
   justify-content: center;
 
@@ -22,31 +27,10 @@ const Box = styled.div`
   gap: 15px;
 `
 
-const FeedItem = styled.div`
-  // 임시
-  height: 200px;
-
-  flex-grow: 1;
-  background-color: #f2f2f2;
-`
-
-const FeedItems = () => {
-  const router = useRouter()
-
+const FeedItems = ({ children }: FeedItemsProps) => {
   return (
     <Wrapper>
-      <Box>
-        {FEED_ITEMS_MOCKUP.map((feedItem, index) => (
-          <FeedItem
-            onClick={() => {
-              router.push(`./posts/${feedItem}`)
-            }}
-            key={index}
-          >
-            {feedItem}
-          </FeedItem>
-        ))}
-      </Box>
+      <Box>{children}</Box>
     </Wrapper>
   )
 }
