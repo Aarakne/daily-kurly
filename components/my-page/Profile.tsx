@@ -51,8 +51,7 @@ const PostInfo = styled.div`
 `
 
 const Profile = ({ postCounts, likeCounts }: ProfileProps) => {
-  //   const me = useRecoilValue(userState)
-  const me = { grade: 'purple', name: 'lee123' }
+  const me = useRecoilValue(userState)
 
   return (
     <Wrapper>

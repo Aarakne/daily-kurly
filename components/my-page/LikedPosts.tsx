@@ -40,7 +40,6 @@ const PostTitle = styled.div`
 
 const LikedProducts = () => {
   const me = useRecoilValue(userState)
-  //   const me = { grade: 'purple', name: 'lee123' }
 
   const { data: likedPosts } = useQuery(['fetchlikedPost'], fetchLikedPosts, {
     staleTime: 60 * 1000,
