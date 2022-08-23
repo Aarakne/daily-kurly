@@ -29,7 +29,10 @@ const Wrapper = styled.div<WrapperProps>`
   font-weight: bold;
 `
 
-const Left = styled.div``
+const Left = styled.div`
+  cursor: pointer;
+`
+
 const Center = styled.div``
 
 export default function Header({ title }: HeaderProps) {

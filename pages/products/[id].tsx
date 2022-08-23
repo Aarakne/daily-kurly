@@ -27,6 +27,8 @@ const Box = styled.div`
   padding-top: 10px;
 
   display: flex;
+
+  cursor: pointer;
 `
 
 const ProductInfo = styled.div`
@@ -122,6 +124,8 @@ const PurchaseButton = styled.button`
   background-color: #5f0080;
 
   border-radius: 5px;
+
+  cursor: pointer;
 `
 
 const Products: NextPage = () => {

@@ -23,6 +23,8 @@ const FloatingButton = styled.button`
   background-color: #5f0080;
 
   border-radius: 100%;
+
+  cursor: pointer;
 `
 
 const FloatingButtons = () => {

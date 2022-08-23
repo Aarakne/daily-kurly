@@ -25,6 +25,8 @@ const LikeButton = styled.button`
   position: absolute;
   top: 5px;
   right: 0px;
+
+  cursor: pointer;
 `
 
 const FeedItem = ({ id, image, liked }: FeedItemProps) => {
@@ -51,7 +53,8 @@ const FeedItem = ({ id, image, liked }: FeedItemProps) => {
     [image],
   )
 
-  const onClickItem = () => {
+  const onClickItem = (e: any) => {
+    e.preventDefault()
     router.push(`/posts/${id}`)
   }
 

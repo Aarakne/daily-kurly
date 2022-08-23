@@ -29,6 +29,8 @@ const Box = styled.div<BoxStyledType>`
   border-radius: 3px;
 
   ${({ isSelected }) => isSelected && `background-color: #5f0080; color: #fff;`}
+
+  cursor: pointer;
 `
 
 const Category1 = ({ categoryTitle }: Category2Props) => {

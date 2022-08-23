@@ -22,6 +22,10 @@ const Top = styled.div`
   align-items: center;
 
   background-color: #5f0080;
+
+  a {
+    cursor: pointer;
+  }
 `
 
 const Content = styled.div`

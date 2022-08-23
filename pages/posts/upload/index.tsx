@@ -53,6 +53,8 @@ const FileInput = styled.label`
 
   border: 1px solid #e7e6e6;
   border-radius: 5px;
+
+  cursor: pointer;
 `
 
 const HiddenInput = styled.input`
@@ -102,6 +104,10 @@ const SheetButton = styled.div`
   padding: 0;
 
   border-bottom: 2px solid #eee;
+
+  svg {
+    cursor: pointer;
+  }
 `
 
 const ProductSelect = styled.div`
@@ -130,6 +136,8 @@ const SubmitButton = styled.button`
   background-color: #5f0080;
 
   border-radius: 5px;
+
+  cursor: pointer;
 `
 
 const ProductPreview = styled.div`
