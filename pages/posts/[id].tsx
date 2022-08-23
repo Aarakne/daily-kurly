@@ -136,8 +136,6 @@ const PostLikeCount = styled.div`
   color: #5f0080;
 `
 
-const UsedProductContainer = styled.div``
-
 const UsedProductTitle = styled.div`
   font-size: 18px;
   font-weight: bold;
@@ -147,16 +145,47 @@ const UsedProductTitle = styled.div`
   background-color: steelblue;
 `
 
-const UsedProduct = styled.div`
+const UsedProductContainer = styled.div`
   display: flex;
+  overflow: auto;
+
+  padding: 10px;
+  background-color: lightblue;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const UsedProduct = styled.div`
+  position: relative;
+  width: 300px;
+
+  display: flex;
+  flex-shrink: 0;
+
   justify-content: space-between;
 
-  margin: 10px;
+  margin-right: 10px;
   padding: 10px;
 
-  background-color: lightsteelblue;
+  background-color: black;
 
   border-radius: 10px;
+`
+
+const SimilarTag = styled.div`
+  position: absolute;
+  top: -10px;
+  left: -5px;
+
+  font-size: 12px;
+
+  padding: 5px 10px;
+
+  background-color: yellow;
+
+  border-radius: 5px;
 `
 
 const UsedProductContent = styled.div`
@@ -168,7 +197,7 @@ const UsedProductImage = styled.div`
   width: 100px;
   height: 100px;
 
-  background-color: steelblue;
+  background-color: red;
 `
 
 const UsedProductInfo = styled.div`
@@ -201,10 +230,9 @@ const UsedProductPrice = styled.div`
 
 const UsedProductLikeButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
 
-  padding: 10px;
+  background-color: white;
 `
 
 const UsedProductLikeButton = styled.div``
@@ -247,12 +275,22 @@ const Posts: NextPage = () => {
         brand: '풀무원',
         sellingPrice: '3000',
         image: 'product_image_1',
+        relatedProduct: {
+          name: '이나이 숙주2',
+          brand: '풀무원2',
+          sellingPrice: '2000',
+        },
       },
       {
         name: '닭고기',
         brand: '하림',
         sellingPrice: '6000',
         image: 'product_image_2',
+        relatedProduct: {
+          name: '닭고기2',
+          brand: '하림2',
+          sellingPrice: '5000',
+        },
       },
     ],
   }
@@ -309,20 +347,44 @@ const Posts: NextPage = () => {
 
         <UsedProductTitle>사용 상품</UsedProductTitle>
         {tempPost.usedProducts.map((product, index) => (
-          <UsedProduct key={index}>
-            <UsedProductContent>
-              <UsedProductImage />
-              <UsedProductInfo>
-                <UsedProductName>{product.name}</UsedProductName>
-                <UsedProductBrand>{product.brand}</UsedProductBrand>
-                <UsedProductPrice>{product.sellingPrice}</UsedProductPrice>
-              </UsedProductInfo>
-            </UsedProductContent>
+          <UsedProductContainer key={index}>
+            <UsedProduct>
+              <UsedProductContent>
+                <UsedProductImage />
+                <UsedProductInfo>
+                  <UsedProductName>{product.name}</UsedProductName>
+                  <UsedProductBrand>{product.brand}</UsedProductBrand>
+                  <UsedProductPrice>{product.sellingPrice}</UsedProductPrice>
+                </UsedProductInfo>
+              </UsedProductContent>
 
-            <UsedProductLikeButtonContainer>
-              <UsedProductLikeButton>❤️</UsedProductLikeButton>
-            </UsedProductLikeButtonContainer>
-          </UsedProduct>
+              <UsedProductLikeButtonContainer>
+                <UsedProductLikeButton>❤️</UsedProductLikeButton>
+              </UsedProductLikeButtonContainer>
+            </UsedProduct>
+
+            <UsedProduct>
+              <SimilarTag>비슷한</SimilarTag>
+              <UsedProductContent>
+                <UsedProductImage />
+                <UsedProductInfo>
+                  <UsedProductName>
+                    {product.relatedProduct?.name}
+                  </UsedProductName>
+                  <UsedProductBrand>
+                    {product.relatedProduct?.brand}
+                  </UsedProductBrand>
+                  <UsedProductPrice>
+                    {product.relatedProduct?.sellingPrice}
+                  </UsedProductPrice>
+                </UsedProductInfo>
+              </UsedProductContent>
+
+              <UsedProductLikeButtonContainer>
+                <UsedProductLikeButton>❤️</UsedProductLikeButton>
+              </UsedProductLikeButtonContainer>
+            </UsedProduct>
+          </UsedProductContainer>
         ))}
       </Container>
     )
