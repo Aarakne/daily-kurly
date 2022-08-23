@@ -1,6 +1,15 @@
 import styled from '@emotion/styled'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { isOpenedSheetState } from '../../stores/sheet'
+import { ReactNode } from 'react'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import {
+  isOpenedSheetState,
+  selectedCategory1State,
+  selectedCategory2State,
+} from '../../stores/sheet'
+
+interface BottomSheetProps {
+  children: ReactNode
+}
 
 interface WrapperStyledType {
   isOpened: boolean
@@ -10,6 +19,7 @@ const Wrapper = styled.div<WrapperStyledType>`
   width: 100%;
   position: fixed;
   bottom: ${({ isOpened }) => (isOpened ? '0px' : '-100vh')};
+  z-index: 1000;
 
   background-color: #fff;
 
@@ -19,7 +29,7 @@ const Wrapper = styled.div<WrapperStyledType>`
 
   transition: all 0.5s;
 `
-const SheetHeader = styled.div`
+const Header = styled.div`
   height: 50px;
 
   display: flex;
@@ -32,13 +42,8 @@ const SheetHeader = styled.div`
   border-bottom: 2px solid #eee;
 `
 
-const Tab = styled.div`
-  width: 40%;
-  text-align: center;
-`
-
-const SheetBody = styled.div`
-  min-height: 50vh;
+const Body = styled.div`
+  min-height: 30vh;
 
   font-size: 15px;
 `
@@ -52,16 +57,52 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.15);
 `
 
-const BottomSheet = () => {
+const SelectCategory1 = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const Category1 = styled.div`
+  width: 30%;
+  height: 100px;
+  flex-grow: 1;
+
+  text-align: center;
+
+  border: 1px solid grey;
+`
+
+const SelectCategory2 = styled.div``
+
+const Title = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 5px;
+
+  border-bottom: 1px solid #eee;
+`
+
+const BottomSheet = ({ children }: BottomSheetProps) => {
   const [isOpenedSheet, setIsOpendedSheet] =
     useRecoilState<boolean>(isOpenedSheetState)
+  const setSelectedCategory1 = useSetRecoilState(selectedCategory1State)
+  const setSelectedCategory2 = useSetRecoilState(selectedCategory2State)
+
+  const onCloseSheet = () => {
+    setIsOpendedSheet(false)
+    setSelectedCategory1('')
+    setSelectedCategory2('')
+  }
 
   return (
     <>
-      {isOpenedSheet && <Overlay onClick={() => setIsOpendedSheet(false)} />}
+      {isOpenedSheet && <Overlay onClick={onCloseSheet} />}
       <Wrapper isOpened={isOpenedSheet}>
-        <SheetHeader></SheetHeader>
-        <SheetBody></SheetBody>
+        <Header>요리 분류</Header>
+        <Body>{children}</Body>
       </Wrapper>
     </>
   )
