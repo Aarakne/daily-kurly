@@ -20,7 +20,7 @@ const FeedItem = ({ id, image }: FeedItemProps) => {
     () =>
       image?.replace(
         's3://daily-kurly/',
-        'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
+        `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
       ),
     [image],
   )

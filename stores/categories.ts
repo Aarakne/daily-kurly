@@ -22,7 +22,7 @@ export const selectedCategory1sState = atom<string[]>({
 })
 
 // post/upload 페이지에서 사용
-export const selectedCategory2sState = atom<string[]>({
+export const selectedCategory2sState = atom<CategoryType[]>({
   key: 'selected-category-2s',
   default: [],
 })
@@ -37,17 +37,4 @@ export const selectedCategory1State = atom<string>({
 export const selectedCategory2State = atom<string>({
   key: 'selected-category-2',
   default: '',
-})
-
-// feed, post/upload 페이지에서 사용
-export const category2sState = selector<CategoryType[]>({
-  key: 'category-2s',
-  get: ({ get }) => {
-    const category1Tag = get(selectedCategory1State)
-    const category1s = get(category1sState)
-
-    const category1 = category1s.find((item) => item.tag === category1Tag)
-
-    return category1?.category2 || []
-  },
 })

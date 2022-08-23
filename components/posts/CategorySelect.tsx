@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
+import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import ArrowBackIcon from '../../assets/arrow-back-sm.svg'
-import { isOpenedSheetState } from '../../stores/sheet'
 import {
   category1sState,
   selectedCategory1State,
   selectedCategory2sState,
   selectedCategory2State,
 } from '../../stores/categories'
+import { isOpenedSheetState } from '../../stores/sheet'
 
 const SelectCategory1 = styled.div`
   display: flex;
@@ -68,12 +69,16 @@ const CategorySelect = () => {
     selectedCategory2sState,
   )
 
-  const setSelectedCategory2 = useSetRecoilState(selectedCategory2State)
-
   const category1s = useRecoilValue(category1sState)
 
-  const category2s =
-    selectedCategory2s.length > 0 ? selectedCategory2s : ['베이커리', '음청류']
+  const setSelectedCategory2 = useSetRecoilState(selectedCategory2State)
+
+  useEffect(() => {
+    const category2s = category1s.find(
+      (item) => item.tag === selectedCategory1,
+    )?.category2
+    if (category2s) setSelectedCategory2s(category2s)
+  }, [category1s, selectedCategory1])
 
   const onSelectCategory1 = (category1: string) => {
     setSelectedCategory1(category1)
@@ -104,9 +109,12 @@ const CategorySelect = () => {
         {selectedCategory1}
       </Title>
       <Select>
-        {category2s.map((category2) => (
-          <Option key={category2} onClick={() => onSelectCategory2(category2)}>
-            {category2}
+        {selectedCategory2s.map((category2) => (
+          <Option
+            key={category2.tag}
+            onClick={() => onSelectCategory2(category2.tag)}
+          >
+            {category2.tag}
           </Option>
         ))}
       </Select>
