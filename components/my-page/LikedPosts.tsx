@@ -57,11 +57,7 @@ const LikedProducts = () => {
 
   return (
     <Wrapper>
-      <Title
-        onClick={() => {
-          likedPosts && console.log(getCdnUrl(likedPosts[0].content.images[0]))
-        }}
-      >
+      <Title>
         {me?.name} 님이 {'❤️'}한 요리
       </Title>
       <LikedPostsContainer>
