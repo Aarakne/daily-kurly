@@ -19,7 +19,7 @@ import Image from 'next/image'
 const IMAGE_SIZE = 80
 
 const SelectCategory1 = styled.div`
-  padding: 20px;
+  padding: 30px;
 
   display: flex;
   align-items: center;

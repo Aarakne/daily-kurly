@@ -1,22 +1,23 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { FormEventHandler, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import CategorySelect from '../../../components/posts/CategorySelect'
-import BottomSheet from '../../../components/public/BottomSheet'
-import Header from '../../../components/public/Header'
-import { isOpenedSheetState } from '../../../stores/sheet'
+import api from '../../../api'
 import ArrowForwardIcon from '../../../assets/arrow-forward.svg'
 import FolderAddIcon from '../../../assets/folder-add.svg'
 import PlusSquareIcon from '../../../assets/plus-square.svg'
-import Link from 'next/link'
-import { selectedProductsState } from '../../../stores/upload'
+import CategorySelect from '../../../components/posts/CategorySelect'
+import BottomSheet from '../../../components/public/BottomSheet'
+import Header from '../../../components/public/Header'
 import useCategories from '../../../hooks/useCategories'
 import {
   selectedCategory1State,
   selectedCategory2State,
 } from '../../../stores/categories'
+import { isOpenedSheetState } from '../../../stores/sheet'
+import { selectedProductsState } from '../../../stores/upload'
 
 const IMAGE_SIZE = 80
 const IMAGE_SIZE_SM = 50
@@ -165,6 +166,8 @@ const TextAreaInput = styled.textarea`
   padding: 11.5px 0;
   border-bottom: 2px solid #eee;
   outline: 0;
+
+  resize: none;
 `
 
 const Selected = styled.div`
@@ -210,6 +213,41 @@ const Posts: NextPage = () => {
 
   const onClickSheetButton = () => {
     setIsOpendedSheet(true)
+  }
+
+  const onSubmit = () => {
+    const uploadPost = async () => {
+      const form = new FormData()
+
+      const tagString = tags.replaceAll('#', '').split(' ').join(',')
+      const productString = selectedProducts
+        .map((product) => product._id)
+        .join(',')
+
+      form.append('title', title)
+      form.append('text', text)
+      form.append('tags', tagString)
+      form.append('products', productString)
+      form.append('category1', selectedCategory1)
+      form.append('category2', selectedCategory2)
+
+      if (images) {
+        for (let i = 0; i < images.length; i++) {
+          form.append('images', images[i])
+        }
+      }
+
+      console.log(form)
+
+      try {
+        const res = await api.post('/post', form)
+        return res
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    uploadPost()
   }
 
   return (
@@ -284,7 +322,9 @@ const Posts: NextPage = () => {
             onChange={(e) => setTags(e.target.value)}
           />
         </TagForm>
-        <SubmitButton type="button">등록</SubmitButton>
+        <SubmitButton type="button" onClick={onSubmit}>
+          등록
+        </SubmitButton>
       </Form>
       <BottomSheet>
         <CategorySelect />
