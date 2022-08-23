@@ -14,6 +14,7 @@ const useMe = (): Me | null => {
   return {
     id: 394662,
     name: '전인화아',
+    grade: 'purple',
     profileImage: 'ImageLink',
     likedPosts: [
       { _id: '1', title: 'postId_1' },

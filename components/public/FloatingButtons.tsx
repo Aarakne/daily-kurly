@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import MyIcon from '../../assets/my.svg'
 import WriteIcon from '../../assets/write.svg'
 
@@ -25,9 +26,14 @@ const FloatingButton = styled.button`
 `
 
 const FloatingButtons = () => {
+  const router = useRouter()
   return (
     <Wrapper>
-      <FloatingButton>
+      <FloatingButton
+        onClick={() => {
+          router.push('/my-page')
+        }}
+      >
         <MyIcon />
       </FloatingButton>
       <FloatingButton>

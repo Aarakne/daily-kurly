@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import FeedItem from './FeedItem'
+import { useRouter } from 'next/router'
 
 const FEED_ITEMS_MOCKUP = Array(30)
   .fill(0)
@@ -22,12 +22,29 @@ const Box = styled.div`
   gap: 15px;
 `
 
+const FeedItem = styled.div`
+  // 임시
+  height: 200px;
+
+  flex-grow: 1;
+  background-color: #f2f2f2;
+`
+
 const FeedItems = () => {
+  const router = useRouter()
+
   return (
     <Wrapper>
       <Box>
-        {FEED_ITEMS_MOCKUP.map((feedItem) => (
-          <FeedItem key={feedItem} feedItem={feedItem} />
+        {FEED_ITEMS_MOCKUP.map((feedItem, index) => (
+          <FeedItem
+            onClick={() => {
+              router.push(`./posts/${feedItem}`)
+            }}
+            key={index}
+          >
+            {feedItem}
+          </FeedItem>
         ))}
       </Box>
     </Wrapper>
