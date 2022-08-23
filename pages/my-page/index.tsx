@@ -6,12 +6,7 @@ import Curation from '../../components/my-page/Curation'
 
 const MyPage: NextPage = () => {
   return (
-    <Container
-      headerLeft="<"
-      headerTitle="My Daily"
-      headerRight=""
-      isHeader={true}
-    >
+    <Container headerTitle="My Daily">
       <Profile />
       <LikedProducts />
       <Curation />

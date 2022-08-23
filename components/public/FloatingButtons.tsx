@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import MyIcon from '../../assets/my.svg'
 import WriteIcon from '../../assets/write.svg'
-import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   position: fixed;

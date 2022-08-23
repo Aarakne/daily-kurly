@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
-import useMe from '../../hooks/useMe'
+import { useQuery } from 'react-query'
+import { fetchLikedPosts } from '../../queries/posts'
+import Image from 'next/image'
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -54,24 +56,45 @@ const PostTitle = styled.div`
 `
 
 const LikedProducts = () => {
-  const me = useMe()
+  //   const me = useRecoilValue(userState)
+  const me = { grade: 'purple', name: 'lee123' }
+
+  const { data: likedPosts } = useQuery(['fetchlikedPost'], fetchLikedPosts, {
+    staleTime: 60 * 1000,
+  })
 
   return (
-    me && (
-      <Wrapper>
-        <Title>
-          {me.name} 님이 {'❤️'}한 요리
-        </Title>
-        <LikedPostsContainer>
-          {me.likedPosts.map((post, index) => (
-            <Post key={index}>
-              <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
-              <PostTitle>{post.title}</PostTitle>
-            </Post>
-          ))}
-        </LikedPostsContainer>
-      </Wrapper>
-    )
+    <Wrapper>
+      <Title
+        onClick={() => {
+          likedPosts &&
+            console.log(
+              likedPosts[0].content.images[0].replace(
+                's3://daily-kurly/',
+                'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
+              ),
+            )
+        }}
+      >
+        {me.name} 님이 {'❤️'}한 요리
+      </Title>
+      <LikedPostsContainer>
+        {likedPosts?.map((post, index) => (
+          <Post key={index}>
+            <Image
+              src={post?.content.images[0].replace(
+                's3://daily-kurly/',
+                'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
+              )}
+              width={100}
+              height={100}
+              alt="liked post"
+            />
+            <PostTitle>{post.title}</PostTitle>
+          </Post>
+        ))}
+      </LikedPostsContainer>
+    </Wrapper>
   )
 }
 

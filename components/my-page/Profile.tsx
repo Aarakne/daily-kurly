@@ -1,5 +1,10 @@
 import styled from '@emotion/styled'
-import useMe from '../../hooks/useMe'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
+import { useRecoilValue } from 'recoil'
+import { fetchMyPosts } from '../../queries/posts'
+import { userState } from '../../stores/auth'
+import ProfileIcon from '../../assets/profile.svg'
 
 const Wrapper = styled.div`
   display: flex;
@@ -7,7 +12,7 @@ const Wrapper = styled.div`
 
   padding: 10px;
 
-  background-color: gray;
+  border-bottom: 3px solid gray;
 `
 
 const ProfileContainer = styled.div`
@@ -15,16 +20,12 @@ const ProfileContainer = styled.div`
 
   display: flex;
   align-items: center;
-
-  background-color: black;
 `
 
 const ProfileImageContainer = styled.div`
-  width: 70px;
-  height: 70px;
+  padding: 20px;
 
-  background-color: lightblue;
-
+  border: 2px solid lightgray;
   border-radius: 50px;
 `
 
@@ -32,11 +33,10 @@ const Content = styled.div`
   flex: 1;
 
   margin-left: 20px;
-  background-color: lightcyan;
 `
 
 const Name = styled.div`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `
 
@@ -44,31 +44,37 @@ const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
-
-  background-color: lightgray;
 `
 
 const Profile = () => {
-  const me = useMe()
+  const me = useRecoilValue(userState)
+  //   const me = { grade: 'purple', name: 'lee123' }
+
+  const { data: posts } = useQuery(['fetchMyPost'], fetchMyPosts, {
+    staleTime: 60 * 1000,
+  })
+
+  const likeCounts = useMemo(
+    () => posts?.reduce((sum, curPost) => sum + curPost.likeCount, 0),
+    [posts],
+  )
 
   return (
-    me && (
-      <Wrapper>
-        <ProfileContainer>
-          <ProfileImageContainer>
-            {/* <Image src={me.profileImage} /> */}
-          </ProfileImageContainer>
-          <Content>
-            <Name>{me.name}</Name>
-            <PostInfo>
-              <div>게시글 {me.posts}개</div>
-              <div>조회수 {me.view}회</div>
-              <div>팔로우 ?</div>
-            </PostInfo>
-          </Content>
-        </ProfileContainer>
-      </Wrapper>
-    )
+    <Wrapper>
+      <ProfileContainer>
+        <ProfileImageContainer>
+          <ProfileIcon />
+        </ProfileImageContainer>
+        <Content>
+          <Name>{me?.name}</Name>
+          <PostInfo>
+            <div>게시글 {posts?.length}</div>
+            <div>❤️ {likeCounts}</div>
+            <div>팔로우 ?? </div>
+          </PostInfo>
+        </Content>
+      </ProfileContainer>
+    </Wrapper>
   )
 }
 

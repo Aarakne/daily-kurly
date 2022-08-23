@@ -3,6 +3,7 @@ import { Post } from './posts'
 export interface Me {
   id: number
   name: string
+  grade: string
   profileImage: string
   likedPosts: Post[]
   posts: number
