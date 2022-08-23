@@ -43,7 +43,9 @@ const Layout = ({ children }: LayoutProps) => {
     <Wrapper>
       <Top>
         <Link href="/">
-          <Logo />
+          <a>
+            <Logo />
+          </a>
         </Link>
       </Top>
       <Content>{children}</Content>

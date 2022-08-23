@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
+import ArrowBackIcon from '../../assets/arrow-back.svg'
 
 interface HeaderProps {
   title: string
-  left: string
-  right: string
+  right?: string
 }
 
 interface WrapperProps {
@@ -24,7 +24,6 @@ const Wrapper = styled.div<WrapperProps>`
   grid-template-columns: 1fr 5fr 1fr;
   justify-items: center;
   align-items: center;
-  padding: 0 3.2vw;
 
   background-color: white;
 
@@ -33,9 +32,11 @@ const Wrapper = styled.div<WrapperProps>`
 
 const Left = styled.div``
 const Center = styled.div``
-const Right = styled.div``
+const Right = styled.div`
+  padding-right: 3vw;
+`
 
-export default function Header({ title, left, right }: HeaderProps) {
+export default function Header({ title, right }: HeaderProps) {
   const router = useRouter()
 
   return (
@@ -45,16 +46,18 @@ export default function Header({ title, left, right }: HeaderProps) {
           router.back()
         }}
       >
-        {left}
+        <ArrowBackIcon />
       </Left>
       <Center>{title}</Center>
-      <Right
-        onClick={() => {
-          router.push('/my-page')
-        }}
-      >
-        {right}
-      </Right>
+      {right && (
+        <Right
+          onClick={() => {
+            router.push('/my-page')
+          }}
+        >
+          {right}
+        </Right>
+      )}
     </Wrapper>
   )
 }

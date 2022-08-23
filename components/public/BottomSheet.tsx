@@ -1,14 +1,13 @@
 import styled from '@emotion/styled'
-import { useState, ReactNode } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { isOpenedSheetState, selectedCategory1State } from '../../stores/sheet'
-import IngredientOption from '../feed/IngredientOption'
-import SituationOption from '../feed/SituationOption'
-import DifficultyOption from '../feed/DifficultyOption'
-import RecipeOption from '../feed/RecipeOption'
+import { ReactNode } from 'react'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import {
+  isOpenedSheetState,
+  selectedCategory1State,
+  selectedCategory2State,
+} from '../../stores/sheet'
 
 interface BottomSheetProps {
-  title: string
   children: ReactNode
 }
 
@@ -20,6 +19,7 @@ const Wrapper = styled.div<WrapperStyledType>`
   width: 100%;
   position: fixed;
   bottom: ${({ isOpened }) => (isOpened ? '0px' : '-100vh')};
+  z-index: 1000;
 
   background-color: #fff;
 
@@ -29,7 +29,7 @@ const Wrapper = styled.div<WrapperStyledType>`
 
   transition: all 0.5s;
 `
-const SheetHeader = styled.div`
+const Header = styled.div`
   height: 50px;
 
   display: flex;
@@ -42,13 +42,8 @@ const SheetHeader = styled.div`
   border-bottom: 2px solid #eee;
 `
 
-const Tab = styled.div`
-  width: 40%;
-  text-align: center;
-`
-
-const SheetBody = styled.div`
-  min-height: 50vh;
+const Body = styled.div`
+  min-height: 30vh;
 
   font-size: 15px;
 `
@@ -62,37 +57,52 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.15);
 `
 
-const BottomSheet = () => {
+const SelectCategory1 = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const Category1 = styled.div`
+  width: 30%;
+  height: 100px;
+  flex-grow: 1;
+
+  text-align: center;
+
+  border: 1px solid grey;
+`
+
+const SelectCategory2 = styled.div``
+
+const Title = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 5px;
+
+  border-bottom: 1px solid #eee;
+`
+
+const BottomSheet = ({ children }: BottomSheetProps) => {
   const [isOpenedSheet, setIsOpendedSheet] =
     useRecoilState<boolean>(isOpenedSheetState)
-  const selectedCategory1 = useRecoilValue(selectedCategory1State)
+  const setSelectedCategory1 = useSetRecoilState(selectedCategory1State)
+  const setSelectedCategory2 = useSetRecoilState(selectedCategory2State)
 
-  const [selectedTab, setSelectedTab] = useState<string>('상황')
+  const onCloseSheet = () => {
+    setIsOpendedSheet(false)
+    setSelectedCategory1('')
+    setSelectedCategory2('')
+  }
 
   return (
     <>
-      {isOpenedSheet && <Overlay onClick={() => setIsOpendedSheet(false)} />}
+      {isOpenedSheet && <Overlay onClick={onCloseSheet} />}
       <Wrapper isOpened={isOpenedSheet}>
-        <SheetHeader>
-          {selectedCategory1 === '상황/난이도별' ? (
-            <>
-              <Tab onClick={() => setSelectedTab('상황')}>상황</Tab>
-              <Tab onClick={() => setSelectedTab('난이도')}>난이도</Tab>
-            </>
-          ) : (
-            selectedCategory1
-          )}
-        </SheetHeader>
-        <SheetBody>
-          {selectedCategory1 === '재료별' && <IngredientOption />}
-          {selectedCategory1 === '상황/난이도별' &&
-            (selectedTab === '상황' ? (
-              <SituationOption />
-            ) : (
-              <DifficultyOption />
-            ))}
-          {selectedCategory1 === '음식분류별' && <RecipeOption />}
-        </SheetBody>
+        <Header>요리 분류</Header>
+        <Body>{children}</Body>
       </Wrapper>
     </>
   )

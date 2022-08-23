@@ -1,20 +1,39 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Header from '../../components/public/Header'
 import styled from '@emotion/styled'
-import { FormEventHandler, useState } from 'react'
+import { FormEventHandler, useEffect, useState } from 'react'
 import Image from 'next/image'
 import FolderAddIcon from '../../assets/folder-add.svg'
+import ArrowForwardIcon from '../../assets/arrow-forward.svg'
+import PlusSquareIcon from '../../assets/plus-square.svg'
+import BottomSheet from '../../components/public/BottomSheet'
+import { useSetRecoilState } from 'recoil'
+import {
+  category1sState,
+  category2sState,
+  isOpenedSheetState,
+} from '../../stores/sheet'
+import api from '../../api'
+import CategorySelect from '../../components/posts/CategorySelect'
 
 const IMAGE_SIZE = 80
 
 const Form = styled.form`
-  padding: 20px 25px;
+  padding: 40px 25px;
   margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
 `
 
 const FileForm = styled.div`
-  display: flex;
-  overflow: scroll-x;
+  width: 100%;
+  padding: 20px 0 10px;
+
+  border-bottom: 2px solid #eee;
 `
 
 const FileInput = styled.label`
@@ -38,7 +57,9 @@ const HiddenInput = styled.input`
 
 const Preview = styled.div`
   display: flex;
-  padding-left: 10px;
+  overflow-x: scroll;
+
+  padding-top: 10px;
 
   gap: 5px;
 `
@@ -48,9 +69,92 @@ const ImageBox = styled.div`
   flex-shrink: 0;
 `
 
+const TextInput = styled.input`
+  width: 100%;
+  height: 50px;
+
+  font-size: 16px;
+
+  border: 0;
+  padding: 0;
+  border-bottom: 2px solid #eee;
+  outline: 0;
+`
+
+const TagInput = styled.input`
+  width: 100%;
+  height: 50px;
+
+  font-size: 16px;
+
+  border: 0;
+  padding: 0;
+  outline: 0;
+`
+
+const SheetButton = styled.div`
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 16px;
+
+  padding: 0;
+
+  border-bottom: 2px solid #eee;
+`
+
+const ProductSelect = styled.div`
+  width: 100%;
+
+  font-size: 16px;
+  line-height: 50px;
+
+  p {
+    margin: 0;
+  }
+
+  border-bottom: 2px solid #eee;
+`
+
+const SubmitButton = styled.button`
+  width: 230px;
+  height: 40px;
+
+  position: absolute;
+  bottom: 60px;
+
+  font-size: 16px;
+  color: #fff;
+
+  background-color: #5f0080;
+
+  border-radius: 5px;
+`
+
 const Posts: NextPage = () => {
+  const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
+  const setCategory1s = useSetRecoilState(category1sState)
+  const setCategory2s = useSetRecoilState(category2sState)
+
   const [images, setImages] = useState<FileList | null>(null)
   const [imageUrls, setImageUrls] = useState<string[]>([])
+
+  const getCategories = async () => {
+    const {
+      data: { category1s, category2s },
+    } = await api.get('/meta/posts/categories')
+
+    setCategory1s(category1s)
+    setCategory2s(category2s)
+  }
+
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   const onChangeImages: FormEventHandler<HTMLLabelElement> = (e) => {
     const target = e.target as HTMLInputElement
@@ -69,7 +173,7 @@ const Posts: NextPage = () => {
 
   return (
     <div>
-      <Header title="게시글 작성" left="<" right="my" />
+      <Header title="게시글 작성" />
       <Form>
         <FileForm>
           <FileInput htmlFor="upload-image" onChange={onChangeImages}>
@@ -90,7 +194,21 @@ const Posts: NextPage = () => {
             ))}
           </Preview>
         </FileForm>
+        <TextInput type="text" placeholder="요리명 작성" />
+        <SheetButton onClick={() => setIsOpendedSheet(true)}>
+          요리분류
+          <ArrowForwardIcon />
+        </SheetButton>
+        <ProductSelect>
+          <p>사용 상품</p>
+          <PlusSquareIcon />
+        </ProductSelect>
+        <TagInput type="text" placeholder="#요리태그" />
+        <SubmitButton type="button">등록</SubmitButton>
       </Form>
+      <BottomSheet>
+        <CategorySelect />
+      </BottomSheet>
     </div>
   )
 }
