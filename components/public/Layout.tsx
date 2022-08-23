@@ -14,6 +14,7 @@ const Top = styled.div`
   height: 40px;
   position: fixed;
   top: 0px;
+  z-index: 99;
 
   padding-left: 15px;
 
@@ -32,6 +33,7 @@ const Bottom = styled.div`
   height: 40px;
   position: fixed;
   bottom: 0px;
+  z-index: 99;
 
   background-color: #fff;
 

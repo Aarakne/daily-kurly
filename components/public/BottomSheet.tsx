@@ -19,7 +19,7 @@ const Wrapper = styled.div<WrapperStyledType>`
   width: 100%;
   position: fixed;
   bottom: ${({ isOpened }) => (isOpened ? '0px' : '-100vh')};
-  z-index: 1000;
+  z-index: 200;
 
   background-color: #fff;
 
@@ -54,6 +54,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.15);
 `
 

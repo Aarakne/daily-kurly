@@ -17,7 +17,7 @@ const Wrapper = styled.div<WrapperProps>`
 
   position: fixed;
   overflow: hidden;
-  z-index: 999;
+  z-index: 99;
   top: 40px;
 
   display: grid;
