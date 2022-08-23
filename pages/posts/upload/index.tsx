@@ -1,20 +1,16 @@
-import type { GetStaticProps, NextPage } from 'next'
-import Header from '../../components/public/Header'
 import styled from '@emotion/styled'
-import { FormEventHandler, useEffect, useState } from 'react'
+import type { NextPage } from 'next'
 import Image from 'next/image'
-import FolderAddIcon from '../../assets/folder-add.svg'
-import ArrowForwardIcon from '../../assets/arrow-forward.svg'
-import PlusSquareIcon from '../../assets/plus-square.svg'
-import BottomSheet from '../../components/public/BottomSheet'
+import { FormEventHandler, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
-import {
-  category1sState,
-  category2sState,
-  isOpenedSheetState,
-} from '../../stores/sheet'
-import api from '../../api'
-import CategorySelect from '../../components/posts/CategorySelect'
+import CategorySelect from '../../../components/posts/CategorySelect'
+import BottomSheet from '../../../components/public/BottomSheet'
+import Header from '../../../components/public/Header'
+import { isOpenedSheetState } from '../../../stores/sheet'
+import ArrowForwardIcon from '../../../assets/arrow-forward.svg'
+import FolderAddIcon from '../../../assets/folder-add.svg'
+import PlusSquareIcon from '../../../assets/plus-square.svg'
+import Link from 'next/link'
 
 const IMAGE_SIZE = 80
 
@@ -186,7 +182,11 @@ const Posts: NextPage = () => {
         </SheetButton>
         <ProductSelect>
           <p>사용 상품</p>
-          <PlusSquareIcon />
+          <Link href="/posts/upload/purchases">
+            <a>
+              <PlusSquareIcon />
+            </a>
+          </Link>
         </ProductSelect>
         <TagInput type="text" placeholder="#요리태그" />
         <SubmitButton type="button">등록</SubmitButton>
