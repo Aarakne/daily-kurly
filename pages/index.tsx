@@ -2,13 +2,15 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useInfiniteQuery } from 'react-query'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import api from '../api'
 import Category2s from '../components/feed/Category2s'
 import FeedItem from '../components/feed/FeedItem'
 import FeedItems from '../components/feed/FeedItems'
 import FloatingButtons from '../components/public/FloatingButtons'
+import useAuth from '../hooks/useAuth'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
+import { loggedInState } from '../stores/auth'
 import { isOpenedSheetState } from '../stores/sheet'
 
 const Wrapper = styled.div`
@@ -22,6 +24,8 @@ const fetchPosts = async (pageParam: number) => {
 }
 
 const Home: NextPage = () => {
+  const { signUp, login } = useAuth()
+  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
   const isOpenedSheet = useRecoilValue(isOpenedSheetState)
 
   const lastItemRef = useRef<HTMLDivElement>(null)
@@ -55,6 +59,20 @@ const Home: NextPage = () => {
       document.body.style.overflow = 'unset'
     }
   }, [isOpenedSheet])
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      if (loggedIn) return
+      let loginStatus = await login()
+      if (!loginStatus) {
+        await signUp()
+        loginStatus = await login()
+      }
+      setLoggedIn(loginStatus)
+    }
+
+    checkLoginStatus()
+  }, [loggedIn])
 
   return (
     <Wrapper>

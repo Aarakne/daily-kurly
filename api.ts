@@ -7,4 +7,6 @@ const api: AxiosInstance = axios.create({
   },
 })
 
+api.defaults.withCredentials = true
+
 export default api
