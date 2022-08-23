@@ -9,8 +9,18 @@ import {
   selectedCategory2State,
 } from '../../stores/categories'
 import { isOpenedSheetState } from '../../stores/sheet'
+import KoreanFoodIcon from '../../assets/korean-food.png'
+import JapaneseFoodIcon from '../../assets/japanese-food.png'
+import ItalianFoodIcon from '../../assets/italian-food.png'
+import ChineseFoodIcon from '../../assets/chinese-food.png'
+import OthersIcon from '../../assets/three-dots.svg'
+import Image from 'next/image'
+
+const IMAGE_SIZE = 80
 
 const SelectCategory1 = styled.div`
+  padding: 20px;
+
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -19,11 +29,14 @@ const SelectCategory1 = styled.div`
 const Category1 = styled.div`
   width: 30%;
   height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-grow: 1;
 
   text-align: center;
-
-  border: 1px solid grey;
+  font-weight: 600;
 `
 
 const SelectCategory2 = styled.div``
@@ -91,6 +104,21 @@ const CategorySelect = () => {
     setIsOpendedSheet(false)
   }
 
+  const getFoodIcon = (category: string) => {
+    switch (category) {
+      case '한식':
+        return KoreanFoodIcon
+      case '일식':
+        return JapaneseFoodIcon
+      case '중식':
+        return ChineseFoodIcon
+      case '양식':
+        return ItalianFoodIcon
+      default:
+        return null
+    }
+  }
+
   return selectedCategory1 === '' ? (
     <SelectCategory1>
       {category1s?.map((category) => (
@@ -98,6 +126,16 @@ const CategorySelect = () => {
           key={category.tag}
           onClick={() => onSelectCategory1(category.tag)}
         >
+          {getFoodIcon(category.tag) ? (
+            <Image
+              src={getFoodIcon(category.tag)}
+              width={IMAGE_SIZE}
+              height={IMAGE_SIZE}
+              alt={category.tag}
+            />
+          ) : (
+            <OthersIcon />
+          )}
           {category.tag}
         </Category1>
       ))}
