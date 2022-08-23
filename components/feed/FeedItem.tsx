@@ -18,7 +18,7 @@ const FeedItem = ({ id, image }: FeedItemProps) => {
 
   const imageUrl = useMemo(
     () =>
-      image.replace(
+      image?.replace(
         's3://daily-kurly/',
         'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
       ),
