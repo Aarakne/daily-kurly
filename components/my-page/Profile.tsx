@@ -1,5 +1,9 @@
 import styled from '@emotion/styled'
-import useMe from '../../hooks/useMe'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
+import { useRecoilValue } from 'recoil'
+import { fetchMyPosts } from '../../queries/posts'
+import { userState } from '../../stores/auth'
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,26 +53,35 @@ const PostInfo = styled.div`
 `
 
 const Profile = () => {
-  const me = useMe()
+  const me = useRecoilValue(userState)
+  // {grade: "purple"
+  // name: "lee123"}
+
+  const { data: posts } = useQuery(['fetchMyPost'], fetchMyPosts, {
+    staleTime: 60 * 1000,
+  })
+
+  const likeCounts = useMemo(
+    () => posts?.reduce((sum, curPost) => sum + curPost.likeCount, 0),
+    [posts],
+  )
 
   return (
-    me && (
-      <Wrapper>
-        <ProfileContainer>
-          <ProfileImageContainer>
-            {/* <Image src={me.profileImage} /> */}
-          </ProfileImageContainer>
-          <Content>
-            <Name>{me.name}</Name>
-            <PostInfo>
-              <div>게시글 {me.posts}개</div>
-              <div>조회수 {me.view}회</div>
-              <div>팔로우 ?</div>
-            </PostInfo>
-          </Content>
-        </ProfileContainer>
-      </Wrapper>
-    )
+    <Wrapper>
+      <ProfileContainer>
+        <ProfileImageContainer>
+          {/* <Image src={me.profileImage} /> */}
+        </ProfileImageContainer>
+        <Content>
+          <Name>{me?.name}</Name>
+          <PostInfo>
+            <div>게시글 {posts?.length}</div>
+            <div>❤️ {likeCounts}</div>
+            <div>팔로우 ?? </div>
+          </PostInfo>
+        </Content>
+      </ProfileContainer>
+    </Wrapper>
   )
 }
 

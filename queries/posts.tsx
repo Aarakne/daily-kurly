@@ -3,6 +3,7 @@ import api from '../api'
 export interface Post {
   _id: string
   title: string
+  likeCount: number
 }
 
 export const fetchPostDetail = async (
@@ -15,12 +16,11 @@ export const fetchPostDetail = async (
   return post
 }
 
-export const fetchMyPosts = async (
-  userId: number | undefined,
-): Promise<Post[]> => {
+export const fetchMyPosts = async (): Promise<Post[]> => {
   const {
-    data: { myPosts },
-  } = await api.get(`/posts/${userId}`)
+    data: { posts },
+  } = await api.get(`/me/posts`)
 
-  return myPosts
+  console.log(posts)
+  return posts
 }
