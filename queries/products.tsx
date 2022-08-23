@@ -8,3 +8,11 @@ export const fetchProduct = async (productId: QueryStringType) => {
 
   return product
 }
+
+export const postPurchaseProduct = async (productId: QueryStringType) => {
+  const res = await api.post('me/purchase', {
+    products: [productId],
+  })
+
+  return res
+}

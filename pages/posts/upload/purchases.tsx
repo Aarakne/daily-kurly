@@ -21,6 +21,9 @@ const Form = styled.div`
 
 const Box = styled.div`
   width: 100%;
+  max-height: 600px;
+
+  overflow-y: scroll;
 `
 
 const Description = styled.div`
@@ -48,9 +51,7 @@ const AddButton = styled.button`
 const SubmitButton = styled.button`
   width: 230px;
   height: 40px;
-
-  position: absolute;
-  bottom: 60px;
+  margin-top: 20px;
 
   font-size: 16px;
   color: #fff;

@@ -51,7 +51,7 @@ const Layout = ({ children }: LayoutProps) => {
         </Link>
       </Top>
       <Content>{children}</Content>
-      <Bottom></Bottom>
+      {/* <Bottom></Bottom> */}
     </Wrapper>
   )
 }

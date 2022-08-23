@@ -2,12 +2,17 @@ import { NextPage } from 'next'
 import styled from '@emotion/styled'
 import Header from '../../components/public/Header'
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { fetchProduct } from '../../queries/products'
+import { useMutation, useQuery } from 'react-query'
+import { fetchProduct, postPurchaseProduct } from '../../queries/products'
 import Image from 'next/image'
+import UnlikedIcon from '../../assets/heart-empty.svg'
 
 const IMAGE_WIDTH = 200
 const IMAGE_HEIGHT = 150
+
+const Wrapper = styled.div`
+  position: relative;
+`
 
 const Content = styled.div`
   padding: 50px 10px 0;
@@ -20,6 +25,8 @@ const Content = styled.div`
 
 const Box = styled.div`
   padding-top: 10px;
+
+  display: flex;
 `
 
 const ProductInfo = styled.div`
@@ -68,6 +75,54 @@ const SellingPrice = styled.div`
   font-size: 17px;
   font-weight: 700;
 `
+const RelatedProductInfo = styled.div`
+  padding: 5px 12px;
+  font-size: 15px;
+`
+
+const Name = styled.div`
+  padding-bottom: 5px;
+
+  font-weight: 600;
+`
+
+const BottomTab = styled.div`
+  width: 100vw;
+  height: 55px;
+
+  padding: 3px 20px;
+
+  position: fixed;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  background-color: #fff;
+`
+
+const LikeButton = styled.button`
+  height: 80%;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+`
+
+const PurchaseButton = styled.button`
+  width: 100%;
+  height: 80%;
+
+  font-size: 16px;
+  color: #fff;
+
+  background-color: #5f0080;
+
+  border-radius: 5px;
+`
 
 const Products: NextPage = () => {
   const router = useRouter()
@@ -85,12 +140,20 @@ const Products: NextPage = () => {
     () => fetchProduct(product?.relatedProduct),
   )
 
-  console.log(product)
+  const { mutate: purchaseProduct } = useMutation(
+    ['purchase-product', productId],
+    () => postPurchaseProduct(productId),
+    // 구매내역 invalidate하기
+  )
+
+  const onPurchase = () => {
+    purchaseProduct()
+  }
 
   if (!product) return <div>로딩 중이에요</div>
 
   return (
-    <div>
+    <Wrapper>
       <Header title={product.name} />
       <Content>
         <Image
@@ -143,18 +206,28 @@ const Products: NextPage = () => {
         {relatedProduct && (
           <ProductInfo>
             <InfoHeader>이 상품은 어때요?</InfoHeader>
-            <Box>
+            <Box onClick={() => router.push(`/products/${relatedProduct._id}`)}>
               <Image
                 src={relatedProduct.image}
-                width={80}
-                height={80}
+                width={100}
+                height={100}
                 alt={relatedProduct.name}
               />
+              <RelatedProductInfo>
+                <Name>{relatedProduct.name}</Name>
+                <Price>{relatedProduct.sellingPrice}</Price>
+              </RelatedProductInfo>
             </Box>
           </ProductInfo>
         )}
       </Content>
-    </div>
+      <BottomTab>
+        <LikeButton>
+          <UnlikedIcon />
+        </LikeButton>
+        <PurchaseButton onClick={onPurchase}>구매하기</PurchaseButton>
+      </BottomTab>
+    </Wrapper>
   )
 }
 
