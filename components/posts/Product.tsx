@@ -1,22 +1,17 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import CheckedIcon from '../../assets/circle-checked.svg'
 import UncheckedIcon from '../../assets/circle-empty.svg'
-import { selectedProductsState } from '../../stores/upload'
+import { ProductType, selectedProductsState } from '../../stores/upload'
 
 const IMAGE_SIZE = 100
 
-export interface ProductType {
-  _id: string
-  name: string
-  brand: string
-  image: string
-}
-
 interface ProductProps {
   product: ProductType
+  onCheck: (product: ProductType) => void
+  onUncheck: (product: ProductType) => void
 }
 
 const Wrapper = styled.div`
@@ -57,30 +52,24 @@ const Button = styled.button`
   padding: 10px;
 `
 
-const Product = ({ product }: ProductProps) => {
-  const [selectedProducts, setSelectedProducts] = useRecoilState(
-    selectedProductsState,
-  )
+const Product = ({ product, onCheck, onUncheck }: ProductProps) => {
+  const selectedProducts = useRecoilValue(selectedProductsState)
+
   const [checked, setChecked] = useState<boolean>(
-    !!selectedProducts.find((item) => item.id === product._id),
+    !!selectedProducts.find((item) => item._id === product._id),
   )
 
-  const onCheck = () => {
+  const onClick = () => {
     if (!checked) {
-      setSelectedProducts([
-        ...selectedProducts,
-        { id: product._id, image: product.image },
-      ])
+      onCheck(product)
     } else {
-      setSelectedProducts(
-        selectedProducts.filter((item) => item.id !== product._id),
-      )
+      onUncheck(product)
     }
     setChecked((prev) => !prev)
   }
 
   return (
-    <Wrapper onClick={onCheck}>
+    <Wrapper onClick={onClick}>
       <Image
         src={product.image}
         alt={product.name}

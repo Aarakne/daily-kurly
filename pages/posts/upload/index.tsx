@@ -258,7 +258,7 @@ const Posts: NextPage = () => {
           {selectedProducts && (
             <ProductPreview>
               {selectedProducts.map((product) => (
-                <ImageBox key={product.id} width={IMAGE_SIZE_SM}>
+                <ImageBox key={product._id} width={IMAGE_SIZE_SM}>
                   <Image
                     src={product.image}
                     alt="purchased product"

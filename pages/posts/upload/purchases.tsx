@@ -3,8 +3,11 @@ import { NextPage } from 'next'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import api from '../../../api'
-import Product, { ProductType } from '../../../components/posts/Product'
+import Product from '../../../components/posts/Product'
 import Header from '../../../components/public/Header'
+import { useSetRecoilState } from 'recoil'
+import { ProductType, selectedProductsState } from '../../../stores/upload'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   padding-top: 50px;
@@ -58,10 +61,31 @@ const SubmitButton = styled.button`
 `
 
 const Purchases: NextPage = () => {
+  const router = useRouter()
+
   const { data, isSuccess } = useQuery(
     ['fetch-products'],
     async () => await api.get('/me/products'),
   )
+
+  const setProducts = useSetRecoilState(selectedProductsState)
+
+  const [selectedProducts, setSelectedProducts] = useState<ProductType[]>([])
+
+  const onCheck = (product: ProductType) => {
+    setSelectedProducts([...selectedProducts, product])
+  }
+
+  const onUncheck = (product: ProductType) => {
+    setSelectedProducts(
+      selectedProducts.filter((item) => item._id !== product._id),
+    )
+  }
+
+  const onSubmit = () => {
+    setProducts(selectedProducts)
+    router.back()
+  }
 
   return (
     <Wrapper>
@@ -77,7 +101,12 @@ const Purchases: NextPage = () => {
         <Box>
           {isSuccess &&
             data.data.products?.map((product: ProductType) => (
-              <Product key={product._id} product={product} />
+              <Product
+                key={product._id}
+                product={product}
+                onCheck={onCheck}
+                onUncheck={onUncheck}
+              />
             ))}
         </Box>
         <Description>
@@ -88,7 +117,7 @@ const Purchases: NextPage = () => {
           </p>
           <AddButton>추가</AddButton>
         </Description>
-        <SubmitButton>선택 완료</SubmitButton>
+        <SubmitButton onClick={onSubmit}>선택 완료</SubmitButton>
       </Form>
     </Wrapper>
   )
