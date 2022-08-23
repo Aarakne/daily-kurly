@@ -10,7 +10,10 @@ const nextConfig = {
     return config
   },
   images: {
-    domains: ['daily-kurly.s3.ap-northeast-2.amazonaws.com'],
+    domains: [
+      'daily-kurly.s3.ap-northeast-2.amazonaws.com',
+      'www.foodiesfeed.com',
+    ],
   },
 }
 

@@ -46,10 +46,10 @@ const CategorySelect = () => {
     <SelectCategory1>
       {category1s?.map((category) => (
         <Category1
-          key={category._id}
-          onClick={() => setSelectedCategory1(category.tag)}
+          key={category}
+          onClick={() => setSelectedCategory1(category)}
         >
-          {category.tag}
+          {category}
         </Category1>
       ))}
     </SelectCategory1>
