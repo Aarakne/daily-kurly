@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRecoilState } from 'recoil'
 import CheckedIcon from '../../assets/circle-checked.svg'
 import UncheckedIcon from '../../assets/circle-empty.svg'
+import { selectedProductsState } from '../../stores/upload'
 
 const IMAGE_SIZE = 100
 
@@ -56,35 +58,41 @@ const Button = styled.button`
 `
 
 const Product = ({ product }: ProductProps) => {
-  const [checked, setChecked] = useState<boolean>(false)
+  const [selectedProducts, setSelectedProducts] = useRecoilState(
+    selectedProductsState,
+  )
+  const [checked, setChecked] = useState<boolean>(
+    !!selectedProducts.find((item) => item.id === product._id),
+  )
 
   const onCheck = () => {
-    setChecked(true)
-  }
-
-  const onUncheck = () => {
-    setChecked(false)
+    if (!checked) {
+      setSelectedProducts([
+        ...selectedProducts,
+        { id: product._id, image: product.image },
+      ])
+    } else {
+      setSelectedProducts(
+        selectedProducts.filter((item) => item.id !== product._id),
+      )
+    }
+    setChecked((prev) => !prev)
   }
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onCheck}>
       <Image
         src={product.image}
         alt={product.name}
         width={IMAGE_SIZE}
         height={IMAGE_SIZE}
+        style={{ borderRadius: 5 }}
       />
       <Info>
         <Name>{product.name}</Name>
         <Brand>{product.brand}</Brand>
       </Info>
-      <Button>
-        {checked ? (
-          <CheckedIcon onClick={onUncheck} />
-        ) : (
-          <UncheckedIcon onClick={onCheck} />
-        )}
-      </Button>
+      <Button>{checked ? <CheckedIcon /> : <UncheckedIcon />}</Button>
     </Wrapper>
   )
 }

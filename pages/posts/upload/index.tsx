@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { FormEventHandler, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import CategorySelect from '../../../components/posts/CategorySelect'
 import BottomSheet from '../../../components/public/BottomSheet'
 import Header from '../../../components/public/Header'
@@ -11,8 +11,10 @@ import ArrowForwardIcon from '../../../assets/arrow-forward.svg'
 import FolderAddIcon from '../../../assets/folder-add.svg'
 import PlusSquareIcon from '../../../assets/plus-square.svg'
 import Link from 'next/link'
+import { selectedProductsState } from '../../../stores/upload'
 
 const IMAGE_SIZE = 80
+const IMAGE_SIZE_SM = 50
 
 const Form = styled.form`
   padding: 40px 25px;
@@ -60,8 +62,12 @@ const Preview = styled.div`
   gap: 5px;
 `
 
-const ImageBox = styled.div`
-  width: ${IMAGE_SIZE}px;
+interface ImageBoxStyledType {
+  width: number
+}
+
+const ImageBox = styled.div<ImageBoxStyledType>`
+  width: ${({ width }) => width}px;
   flex-shrink: 0;
 `
 
@@ -131,9 +137,20 @@ const SubmitButton = styled.button`
   border-radius: 5px;
 `
 
+const ProductPreview = styled.div`
+  width: calc(100% - 60px);
+  display: inline-flex;
+  gap: 5px;
+  padding-left: 10px;
+
+  overflow-x: scroll;
+`
+
 const Posts: NextPage = () => {
   const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
+  const selectedProducts = useRecoilValue(selectedProductsState)
 
+  const [title, setTitle] = useState<string>('')
   const [images, setImages] = useState<FileList | null>(null)
   const [imageUrls, setImageUrls] = useState<string[]>([])
 
@@ -163,7 +180,7 @@ const Posts: NextPage = () => {
           </FileInput>
           <Preview>
             {imageUrls.map((imageUrl) => (
-              <ImageBox key={imageUrl}>
+              <ImageBox key={imageUrl} width={IMAGE_SIZE}>
                 <Image
                   src={imageUrl}
                   alt="preview"
@@ -175,7 +192,12 @@ const Posts: NextPage = () => {
             ))}
           </Preview>
         </FileForm>
-        <TextInput type="text" placeholder="요리명 작성" />
+        <TextInput
+          type="text"
+          placeholder="요리명 작성"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <SheetButton onClick={() => setIsOpendedSheet(true)}>
           요리분류
           <ArrowForwardIcon />
@@ -187,6 +209,21 @@ const Posts: NextPage = () => {
               <PlusSquareIcon />
             </a>
           </Link>
+          {selectedProducts && (
+            <ProductPreview>
+              {selectedProducts.map((product) => (
+                <ImageBox key={product.id} width={IMAGE_SIZE_SM}>
+                  <Image
+                    src={product.image}
+                    alt="purchased product"
+                    width={IMAGE_SIZE_SM}
+                    height={IMAGE_SIZE_SM}
+                    style={{ borderRadius: 5 }}
+                  />
+                </ImageBox>
+              ))}
+            </ProductPreview>
+          )}
         </ProductSelect>
         <TagInput type="text" placeholder="#요리태그" />
         <SubmitButton type="button">등록</SubmitButton>

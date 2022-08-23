@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { NextPage } from 'next'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 import api from '../../../api'
 import Product, { ProductType } from '../../../components/posts/Product'
