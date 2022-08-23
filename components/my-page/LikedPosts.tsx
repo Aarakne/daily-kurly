@@ -5,8 +5,6 @@ import Image from 'next/image'
 import { useRecoilValue } from 'recoil'
 import { userState } from '../../stores/auth'
 
-const Wrapper = styled.div``
-
 const Title = styled.div`
   padding: 30px 0 0 20px;
 
@@ -18,7 +16,7 @@ const LikedPostsContainer = styled.div`
   display: flex;
   overflow: auto;
 
-  padding: 20px;
+  padding: 20px 0 0 10px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -56,7 +54,7 @@ const LikedProducts = () => {
   }
 
   return (
-    <Wrapper>
+    <>
       <Title>
         {me?.name} 님이 {'❤️'}한 요리
       </Title>
@@ -73,7 +71,7 @@ const LikedProducts = () => {
           </Post>
         ))}
       </LikedPostsContainer>
-    </Wrapper>
+    </>
   )
 }
 
