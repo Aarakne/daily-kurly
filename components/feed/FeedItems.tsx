@@ -11,7 +11,7 @@ const FEED_ITEMS_MOCKUP = Array(30)
   .map((_, i) => i)
 
 const Wrapper = styled.div`
-  padding: 4.5vw;
+  padding: 0 4.5vw;
   display: flex;
   justify-content: center;
 
