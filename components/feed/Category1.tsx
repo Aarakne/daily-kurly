@@ -1,7 +1,10 @@
 import styled from '@emotion/styled'
 import { useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { category1sState, selectedCategory1sState } from '../../stores/sheet'
+import {
+  category1sState,
+  selectedCategory1sState,
+} from '../../stores/categories'
 
 interface Category2Props {
   categoryTitle: string

@@ -2,10 +2,10 @@ import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import {
-  isOpenedSheetState,
   selectedCategory1State,
   selectedCategory2State,
-} from '../../stores/sheet'
+} from '../../stores/categories'
+import { isOpenedSheetState } from '../../stores/sheet'
 
 interface BottomSheetProps {
   children: ReactNode

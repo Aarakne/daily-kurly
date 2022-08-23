@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useRecoilValue } from 'recoil'
 import FilterIcon from '../../assets/filter.svg'
-import { category1sState } from '../../stores/sheet'
+import { category1sState } from '../../stores/categories'
 import Category1 from './Category1'
 
 const Wrapper = styled.div`

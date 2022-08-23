@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil'
-import { category1sState, category2sState } from '../stores/sheet'
+import { category1sState, category2sState } from '../stores/categories'
 import api from '../api'
 
 interface CategoryType {

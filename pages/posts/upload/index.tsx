@@ -165,6 +165,7 @@ const TextAreaInput = styled.textarea`
 
 const Posts: NextPage = () => {
   const getCategories = useCategories()
+
   const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
   const selectedProducts = useRecoilValue(selectedProductsState)
 

@@ -12,7 +12,8 @@ import useAuth from '../hooks/useAuth'
 import useCategories from '../hooks/useCategories'
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import { loggedInState } from '../stores/auth'
-import { isOpenedSheetState, selectedCategory1sState } from '../stores/sheet'
+import { selectedCategory1sState } from '../stores/categories'
+import { isOpenedSheetState } from '../stores/sheet'
 
 interface CategoryType {
   _id: string

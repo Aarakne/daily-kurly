@@ -5,7 +5,7 @@ import {
   category1sState,
   selectedCategory1State,
   selectedCategory2State,
-} from '../../stores/sheet'
+} from '../../stores/categories'
 
 const SelectCategory1 = styled.div`
   display: flex;
