@@ -4,6 +4,12 @@ export interface Post {
   _id: string
   title: string
   likeCount: number
+  content: Content
+}
+
+interface Content {
+  text: string
+  images: string[]
 }
 
 export const fetchPostDetail = async (
@@ -21,6 +27,13 @@ export const fetchMyPosts = async (): Promise<Post[]> => {
     data: { posts },
   } = await api.get(`/me/posts`)
 
-  console.log(posts)
   return posts
+}
+
+export const fetchLikedPosts = async (): Promise<Post[]> => {
+  const {
+    data: { likedPosts },
+  } = await api.get(`/me/likedPosts`)
+
+  return likedPosts
 }
