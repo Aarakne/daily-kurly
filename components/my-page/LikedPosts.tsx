@@ -4,6 +4,7 @@ import { fetchLikedPosts } from '../../queries/posts'
 import Image from 'next/image'
 import { useRecoilValue } from 'recoil'
 import { userState } from '../../stores/auth'
+import { useRouter } from 'next/router'
 
 const Title = styled.div`
   padding: 30px 0 0 20px;
@@ -39,6 +40,7 @@ const PostTitle = styled.div`
 `
 
 const LikedProducts = () => {
+  const router = useRouter()
   const me = useRecoilValue(userState)
 
   const { data: likedPosts } = useQuery(['fetchlikedPost'], fetchLikedPosts, {
@@ -59,7 +61,7 @@ const LikedProducts = () => {
       </Title>
       <LikedPostsContainer>
         {likedPosts?.map((post, index) => (
-          <Post key={index}>
+          <Post key={index} onClick={() => router.push(`/posts/${post._id}`)}>
             <Image
               src={getCdnUrl(post?.content.images[0])}
               width={100}
