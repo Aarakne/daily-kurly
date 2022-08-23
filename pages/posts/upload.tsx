@@ -4,17 +4,23 @@ import styled from '@emotion/styled'
 import { FormEventHandler, useState } from 'react'
 import Image from 'next/image'
 import FolderAddIcon from '../../assets/folder-add.svg'
+import ArrowForwardIcon from '../../assets/arrow-forward.svg'
+import PlusSquareIcon from '../../assets/plus-square.svg'
+import BottomSheet from '../../components/public/BottomSheet'
 
 const IMAGE_SIZE = 80
 
 const Form = styled.form`
-  padding: 20px 25px;
+  padding: 40px 25px;
   margin-top: 30px;
+
+  overflow: hidden;
 `
 
 const FileForm = styled.div`
-  display: flex;
-  overflow: scroll-x;
+  padding: 20px 0 10px;
+
+  border-bottom: 2px solid #eee;
 `
 
 const FileInput = styled.label`
@@ -38,7 +44,9 @@ const HiddenInput = styled.input`
 
 const Preview = styled.div`
   display: flex;
-  padding-left: 10px;
+  overflow-x: scroll;
+
+  padding-top: 10px;
 
   gap: 5px;
 `
@@ -46,6 +54,54 @@ const Preview = styled.div`
 const ImageBox = styled.div`
   width: ${IMAGE_SIZE}px;
   flex-shrink: 0;
+`
+
+const TextInput = styled.input`
+  width: 100%;
+  height: 50px;
+
+  font-size: 16px;
+
+  border: 0;
+  padding: 0;
+  border-bottom: 2px solid #eee;
+  outline: 0;
+`
+
+const TagInput = styled.input`
+  width: 100%;
+  height: 50px;
+
+  font-size: 16px;
+
+  border: 0;
+  padding: 0;
+  outline: 0;
+`
+
+const SheetButton = styled.div`
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 16px;
+
+  padding: 0;
+
+  border-bottom: 2px solid #eee;
+`
+
+const ProductSelect = styled.div`
+  font-size: 16px;
+  line-height: 50px;
+
+  p {
+    margin: 0;
+  }
+
+  border-bottom: 2px solid #eee;
 `
 
 const Posts: NextPage = () => {
@@ -90,7 +146,18 @@ const Posts: NextPage = () => {
             ))}
           </Preview>
         </FileForm>
+        <TextInput type="text" placeholder="요리명 작성" />
+        <SheetButton>
+          요리분류
+          <ArrowForwardIcon />
+        </SheetButton>
+        <ProductSelect>
+          <p>사용 상품</p>
+          <PlusSquareIcon />
+        </ProductSelect>
+        <TagInput type="text" placeholder="#요리태그" />
       </Form>
+      <BottomSheet />
     </div>
   )
 }
