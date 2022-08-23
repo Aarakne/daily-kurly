@@ -19,6 +19,12 @@ export const selectedCategory1sState = atom<string[]>({
 })
 
 // post/upload 페이지에서 사용
+export const selectedCategory2sState = atom<string[]>({
+  key: 'selected-category-2s',
+  default: [],
+})
+
+// post/upload 페이지에서 사용
 export const selectedCategory1State = atom<string>({
   key: 'selected-category-1',
   default: '',

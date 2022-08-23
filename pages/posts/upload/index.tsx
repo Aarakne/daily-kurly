@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { FormEventHandler, useEffect, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import CategorySelect from '../../../components/posts/CategorySelect'
 import BottomSheet from '../../../components/public/BottomSheet'
 import Header from '../../../components/public/Header'
@@ -13,6 +13,10 @@ import PlusSquareIcon from '../../../assets/plus-square.svg'
 import Link from 'next/link'
 import { selectedProductsState } from '../../../stores/upload'
 import useCategories from '../../../hooks/useCategories'
+import {
+  selectedCategory1State,
+  selectedCategory2State,
+} from '../../../stores/categories'
 
 const IMAGE_SIZE = 80
 const IMAGE_SIZE_SM = 50
@@ -163,17 +167,31 @@ const TextAreaInput = styled.textarea`
   outline: 0;
 `
 
+const Selected = styled.div`
+  color: #5f0080;
+`
+
 const Posts: NextPage = () => {
   const getCategories = useCategories()
 
   const setIsOpendedSheet = useSetRecoilState<boolean>(isOpenedSheetState)
   const selectedProducts = useRecoilValue(selectedProductsState)
+  const [selectedCategory1, setSelectedCategory1] = useRecoilState(
+    selectedCategory1State,
+  )
+  const [selectedCategory2, setSelectedCategory2] = useRecoilState(
+    selectedCategory2State,
+  )
 
   const [title, setTitle] = useState<string>('')
   const [images, setImages] = useState<FileList | null>(null)
   const [imageUrls, setImageUrls] = useState<string[]>([])
   const [text, setText] = useState<string>('')
   const [tags, setTags] = useState<string>('')
+
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   const onChangeImages: FormEventHandler<HTMLLabelElement> = (e) => {
     const target = e.target as HTMLInputElement
@@ -190,9 +208,9 @@ const Posts: NextPage = () => {
     setImageUrls(fileUrls.slice(0, 10))
   }
 
-  useEffect(() => {
-    getCategories()
-  }, [])
+  const onClickSheetButton = () => {
+    setIsOpendedSheet(true)
+  }
 
   return (
     <div>
@@ -223,8 +241,11 @@ const Posts: NextPage = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <SheetButton onClick={() => setIsOpendedSheet(true)}>
+        <SheetButton onClick={onClickSheetButton}>
           요리분류
+          {selectedCategory1 !== '' && selectedCategory2 !== '' && (
+            <Selected>{`${selectedCategory1} > ${selectedCategory2}`}</Selected>
+          )}
           <ArrowForwardIcon />
         </SheetButton>
         <ProductSelect>
