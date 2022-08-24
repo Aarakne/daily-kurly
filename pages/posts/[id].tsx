@@ -148,11 +148,11 @@ const Posts: NextPage = () => {
   const queryClient = useQueryClient()
 
   const { mutate: likePostToggle } = useMutation(
-    ['like-post'],
+    ['fetctPostDetail'],
     async () => await api.patch(`/post/like/${postId}`),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['liked-posts'])
+        queryClient.invalidateQueries(['fetctPostDetail'])
       },
     },
   )
