@@ -20,7 +20,7 @@ const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 10px;
+  padding: 20px;
 `
 
 const ProfileImageContainer = styled.div`
@@ -37,16 +37,22 @@ const Content = styled.div`
 `
 
 const Name = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `
 
 const PostInfo = styled.div`
   padding-top: 5px;
+
+  font-size: 13px;
 `
 
 const Grade = styled.span`
-  font-size: 15px;
+  font-size: 14px;
   color: #5f0080;
 `
 
@@ -54,7 +60,7 @@ const CarouselContainer = styled.div`
   position: relative;
   overflow: hidden;
 
-  padding: 0;
+  padding: 20px;
 `
 
 const CarouselItem = styled.div`
@@ -73,7 +79,7 @@ const PostInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  padding: 10px;
+  padding: 20px;
 `
 
 const PostTitle = styled.div`
@@ -125,18 +131,24 @@ const UsedProductTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
 
-  padding-left: 10px;
+  padding-left: 20px;
 `
 
 const UsedProductContainer = styled.div`
   display: flex;
+  align-items: center;
   overflow: auto;
-
-  padding: 10px;
 
   &::-webkit-scrollbar {
     display: none;
   }
+`
+
+const UsedProductWrapper = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `
 
 const Posts: NextPage = () => {
@@ -221,12 +233,17 @@ const Posts: NextPage = () => {
           </PostInfoContainer>
 
           <UsedProductTitle>사용 상품</UsedProductTitle>
-          {post.products.map((product, index) => (
-            <UsedProductContainer key={index}>
-              <UsedProduct product={product} />
-              <UsedProduct product={product.relatedProduct} isRelated={true} />
-            </UsedProductContainer>
-          ))}
+          <UsedProductWrapper>
+            {post.products.map((product, index) => (
+              <UsedProductContainer key={index}>
+                <UsedProduct product={product} />
+                <UsedProduct
+                  product={product.relatedProduct}
+                  isRelated={true}
+                />
+              </UsedProductContainer>
+            ))}
+          </UsedProductWrapper>
         </>
       )}
     </Container>
