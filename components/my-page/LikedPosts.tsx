@@ -4,8 +4,7 @@ import { fetchLikedPosts } from '../../queries/posts'
 import Image from 'next/image'
 import { useRecoilValue } from 'recoil'
 import { userState } from '../../stores/auth'
-
-const Wrapper = styled.div``
+import { useRouter } from 'next/router'
 
 const Title = styled.div`
   padding: 30px 0 0 20px;
@@ -18,7 +17,7 @@ const LikedPostsContainer = styled.div`
   display: flex;
   overflow: auto;
 
-  padding: 20px;
+  padding: 20px 0 0 10px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -41,8 +40,8 @@ const PostTitle = styled.div`
 `
 
 const LikedProducts = () => {
+  const router = useRouter()
   const me = useRecoilValue(userState)
-  //   const me = { grade: 'purple', name: 'lee123' }
 
   const { data: likedPosts } = useQuery(['fetchlikedPost'], fetchLikedPosts, {
     staleTime: 60 * 1000,
@@ -56,17 +55,13 @@ const LikedProducts = () => {
   }
 
   return (
-    <Wrapper>
-      <Title
-        onClick={() => {
-          likedPosts && console.log(getCdnUrl(likedPosts[0].content.images[0]))
-        }}
-      >
+    <>
+      <Title>
         {me?.name} 님이 {'❤️'}한 요리
       </Title>
       <LikedPostsContainer>
         {likedPosts?.map((post, index) => (
-          <Post key={index}>
+          <Post key={index} onClick={() => router.push(`/posts/${post._id}`)}>
             <Image
               src={getCdnUrl(post?.content.images[0])}
               width={100}
@@ -77,7 +72,7 @@ const LikedProducts = () => {
           </Post>
         ))}
       </LikedPostsContainer>
-    </Wrapper>
+    </>
   )
 }
 

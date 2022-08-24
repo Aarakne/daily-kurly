@@ -2,17 +2,15 @@ import styled from '@emotion/styled'
 import moment from 'moment'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-// import { useQuery } from 'react-query'
+import { useQuery } from 'react-query'
+import { useRecoilValue } from 'recoil'
 import Carousel from '../../components/public/Carousel'
 import Container from '../../components/public/Container'
-import useMe from '../../hooks/useMe'
-// import { fetchPostDetail } from '../../queries/posts'
-
-const Wrapper = styled.div`
-  padding: 10px;
-
-  background-color: gray;
-`
+import UsedProduct from '../../components/posts/UsedProduct'
+import { fetchPostDetail } from '../../queries/posts'
+import { userState } from '../../stores/auth'
+import Image from 'next/image'
+import ProfileIcon from '../../assets/profile.svg'
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -21,16 +19,12 @@ const ProfileContainer = styled.div`
   align-items: center;
 
   padding: 10px;
-
-  background-color: darkblue;
 `
 
 const ProfileImageContainer = styled.div`
-  width: 50px;
-  height: 50px;
+  padding: 20px;
 
-  background-color: lightblue;
-
+  border: 2px solid lightgray;
   border-radius: 50px;
 `
 
@@ -38,18 +32,15 @@ const Content = styled.div`
   flex: 1;
 
   margin-left: 10px;
-  background-color: lightcyan;
 `
 
 const Name = styled.div`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `
 
 const PostInfo = styled.div`
   padding-top: 5px;
-
-  background-color: lightgray;
 `
 
 const Grade = styled.span`
@@ -62,18 +53,12 @@ const CarouselContainer = styled.div`
   overflow: hidden;
 
   padding: 0;
-
-  background-color: black;
 `
 
 const CarouselItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: 300px;
-
-  background-color: red;
 `
 
 const PostImage = styled.div`
@@ -84,10 +69,9 @@ const PostImage = styled.div`
 `
 const PostInfoContainer = styled.div`
   display: flex;
+  justify-content: space-between;
 
   padding: 10px;
-
-  background-color: lightsteelblue;
 `
 
 const PostTitle = styled.div`
@@ -132,17 +116,14 @@ const PostLikeButton = styled.button`
 `
 
 const PostLikeCount = styled.div`
-  padding-top: 10px;
   color: #5f0080;
 `
 
 const UsedProductTitle = styled.div`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 
   padding-left: 10px;
-
-  background-color: steelblue;
 `
 
 const UsedProductContainer = styled.div`
@@ -150,239 +131,96 @@ const UsedProductContainer = styled.div`
   overflow: auto;
 
   padding: 10px;
-  background-color: lightblue;
 
   &::-webkit-scrollbar {
     display: none;
   }
 `
 
-const UsedProduct = styled.div`
-  position: relative;
-  width: 300px;
-
-  display: flex;
-  flex-shrink: 0;
-
-  justify-content: space-between;
-
-  margin-right: 10px;
-  padding: 10px;
-
-  background-color: black;
-
-  border-radius: 10px;
-`
-
-const SimilarTag = styled.div`
-  position: absolute;
-  top: -10px;
-  left: -5px;
-
-  font-size: 12px;
-
-  padding: 5px 10px;
-
-  background-color: yellow;
-
-  border-radius: 5px;
-`
-
-const UsedProductContent = styled.div`
-  display: flex;
-  background-color: blue;
-`
-
-const UsedProductImage = styled.div`
-  width: 100px;
-  height: 100px;
-
-  background-color: red;
-`
-
-const UsedProductInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding-left: 10px;
-
-  background-color: blue;
-`
-
-const UsedProductName = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-
-  background-color: steelblue;
-`
-
-const UsedProductBrand = styled.div`
-  padding-top: 10px;
-  background-color: steelblue;
-`
-
-const UsedProductPrice = styled.div`
-  color: red;
-
-  background-color: steelblue;
-`
-
-const UsedProductLikeButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  background-color: white;
-`
-
-const UsedProductLikeButton = styled.div``
-
 const Posts: NextPage = () => {
-  const me = useMe()
   const router = useRouter()
   const {
     query: { id: postId },
   } = router
 
-  //   const { data: post } = useQuery(
-  //     ['fetchPostDetail', postId],
-  //     () => fetchPostDetail(postId),
-  //     { enabled: Boolean(postId), staleTime: 60 * 60 * 1000 },
-  //   )
+  const me = useRecoilValue(userState)
 
-  const tempPost = {
-    _id: '1',
-    title: 'postId_1',
-    content: {
-      images: ['image1', 'image2', 'image3', 'image4'],
-      text: 'Very Delicious',
+  const { data: post, isSuccess } = useQuery(
+    ['fetctPostDetail', postId],
+    () => fetchPostDetail(postId),
+    {
+      staleTime: 60 * 1000,
     },
-    createdAt: '20220823',
-    tags: [
-      '계란요리',
-      '자취용',
-      '5분요리',
-      '5분요리',
-      '5분요리',
-      '5분요리',
-      '5분요리',
-    ],
+  )
 
-    likeCount: 13022,
-    usedProducts: [
-      {
-        name: '이나이 숙주',
-        brand: '풀무원',
-        sellingPrice: '3000',
-        image: 'product_image_1',
-        relatedProduct: {
-          name: '이나이 숙주2',
-          brand: '풀무원2',
-          sellingPrice: '2000',
-        },
-      },
-      {
-        name: '닭고기',
-        brand: '하림',
-        sellingPrice: '6000',
-        image: 'product_image_2',
-        relatedProduct: {
-          name: '닭고기2',
-          brand: '하림2',
-          sellingPrice: '5000',
-        },
-      },
-    ],
+  const getCdnUrl = (imageUrl: string) => {
+    return imageUrl.replace(
+      's3://daily-kurly/',
+      'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
+    )
   }
 
   return (
-    me && (
-      <Container headerTitle="Daily Kurly">
-        <ProfileContainer>
-          <ProfileImageContainer>
-            {/* <Image src={me.profileImage} /> */}
-          </ProfileImageContainer>
-          <Content>
-            <Name>
-              {me.name} <Grade>{me.grade}</Grade>
-            </Name>
-            <PostInfo>{moment(moment(tempPost.createdAt)).fromNow()}</PostInfo>
-          </Content>
-        </ProfileContainer>
+    <Container headerTitle="Daily Kurly">
+      {isSuccess && (
+        <>
+          <ProfileContainer>
+            <ProfileImageContainer>
+              <ProfileIcon />
+            </ProfileImageContainer>
+            <Content>
+              <Name>
+                {me?.name} <Grade>{me?.grade}</Grade>
+              </Name>
+              <PostInfo>{moment(moment('20220823')).fromNow()}</PostInfo>
+            </Content>
+          </ProfileContainer>
 
-        <CarouselContainer>
-          <Carousel autoplay={false} centerMode={true} arrows={false}>
-            {tempPost.content.images.map((post, index) => (
-              <>
-                <CarouselItem key={index}>
-                  <PostImage>{/* <Image src={post.ImageUrl} /> */}</PostImage>
-                </CarouselItem>
-              </>
-            ))}
-          </Carousel>
-        </CarouselContainer>
-
-        <PostInfoContainer>
-          <div>
-            <PostTitle>{tempPost.title}</PostTitle>
-            <Tags>
-              {tempPost.tags.map((tag, index) => (
-                <Tag key={index}>#{tag}</Tag>
+          <CarouselContainer>
+            <Carousel autoplay={false} centerMode={true} arrows={false}>
+              {post.images.map((image, index) => (
+                <>
+                  <CarouselItem key={index}>
+                    <Image
+                      src={getCdnUrl(image)}
+                      width={280}
+                      height={280}
+                      alt="detail post"
+                    />
+                  </CarouselItem>
+                </>
               ))}
-            </Tags>
-          </div>
+            </Carousel>
+          </CarouselContainer>
 
-          <PostLikeButtonContainer>
-            <PostLikeButton>❤️</PostLikeButton>
-            <PostLikeCount>
-              {tempPost.likeCount.toLocaleString('ko-KR')}
-            </PostLikeCount>
-          </PostLikeButtonContainer>
-        </PostInfoContainer>
+          <PostInfoContainer>
+            <div>
+              <PostTitle>{post.title}</PostTitle>
+              <Tags>
+                {post.tags.map((tag, index) => (
+                  <Tag key={index}>#{tag}</Tag>
+                ))}
+              </Tags>
+            </div>
 
-        <UsedProductTitle>사용 상품</UsedProductTitle>
-        {tempPost.usedProducts.map((product, index) => (
-          <UsedProductContainer key={index}>
-            <UsedProduct>
-              <UsedProductContent>
-                <UsedProductImage />
-                <UsedProductInfo>
-                  <UsedProductName>{product.name}</UsedProductName>
-                  <UsedProductBrand>{product.brand}</UsedProductBrand>
-                  <UsedProductPrice>{product.sellingPrice}</UsedProductPrice>
-                </UsedProductInfo>
-              </UsedProductContent>
+            <PostLikeButtonContainer>
+              <PostLikeButton>❤️</PostLikeButton>
+              <PostLikeCount>
+                {post.likeCount.toLocaleString('ko-KR')}
+              </PostLikeCount>
+            </PostLikeButtonContainer>
+          </PostInfoContainer>
 
-              <UsedProductLikeButtonContainer>
-                <UsedProductLikeButton>❤️</UsedProductLikeButton>
-              </UsedProductLikeButtonContainer>
-            </UsedProduct>
-
-            <UsedProduct>
-              <SimilarTag>비슷한</SimilarTag>
-              <UsedProductContent>
-                <UsedProductImage />
-                <UsedProductInfo>
-                  <UsedProductName>
-                    {product.relatedProduct?.name}
-                  </UsedProductName>
-                  <UsedProductBrand>
-                    {product.relatedProduct?.brand}
-                  </UsedProductBrand>
-                  <UsedProductPrice>
-                    {product.relatedProduct?.sellingPrice}
-                  </UsedProductPrice>
-                </UsedProductInfo>
-              </UsedProductContent>
-
-              <UsedProductLikeButtonContainer>
-                <UsedProductLikeButton>❤️</UsedProductLikeButton>
-              </UsedProductLikeButtonContainer>
-            </UsedProduct>
-          </UsedProductContainer>
-        ))}
-      </Container>
-    )
+          <UsedProductTitle>사용 상품</UsedProductTitle>
+          {post.products.map((product, index) => (
+            <UsedProductContainer key={index}>
+              <UsedProduct product={product} />
+              <UsedProduct product={product.relatedProduct} isRelated={true} />
+            </UsedProductContainer>
+          ))}
+        </>
+      )}
+    </Container>
   )
 }
 

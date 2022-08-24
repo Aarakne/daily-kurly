@@ -23,6 +23,8 @@ const Top = styled.div`
 
   background-color: #5f0080;
 
+  z-index: 999;
+
   a {
     cursor: pointer;
   }
