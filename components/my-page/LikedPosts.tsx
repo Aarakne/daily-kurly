@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRecoilValue } from 'recoil'
 import { userState } from '../../stores/auth'
 import { useRouter } from 'next/router'
+import { getCdnUrl } from '../../lib/utils'
 
 const Title = styled.div`
   padding: 30px 0 0 20px;
@@ -46,13 +47,6 @@ const LikedProducts = () => {
   const { data: likedPosts } = useQuery(['fetchlikedPost'], fetchLikedPosts, {
     staleTime: 60 * 1000,
   })
-
-  const getCdnUrl = (imageUrl: string) => {
-    return imageUrl.replace(
-      's3://daily-kurly/',
-      `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
-    )
-  }
 
   return (
     <>

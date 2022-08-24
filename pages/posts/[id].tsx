@@ -12,6 +12,7 @@ import { userState } from '../../stores/auth'
 import Image from 'next/image'
 import ProfileIcon from '../../assets/profile.svg'
 import api from '../../api'
+import { getCdnUrl } from '../../lib/utils'
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -162,13 +163,6 @@ const Posts: NextPage = () => {
     () => fetchPostDetail(postId),
     { enabled: !!postId, staleTime: 60 * 1000 },
   )
-
-  const getCdnUrl = (imageUrl: string) => {
-    return imageUrl.replace(
-      's3://daily-kurly/',
-      `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
-    )
-  }
 
   const onLike = (e: any) => {
     e.stopPropagation()
