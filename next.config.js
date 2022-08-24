@@ -12,6 +12,14 @@ const nextConfig = {
   images: {
     domains: [process.env.NEXT_PUBLIC_AWS_S3_URL, 'www.foodiesfeed.com'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: 'http://www.kurlynity.cz:3010/:path*',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
