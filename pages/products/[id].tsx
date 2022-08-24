@@ -147,7 +147,9 @@ const Products: NextPage = () => {
   const { mutate: purchaseProduct } = useMutation(
     ['purchase-product', productId],
     () => postPurchaseProduct(productId),
-    // 구매내역 invalidate하기
+    {
+      onSuccess: () => alert('구매 완료했습니다.'),
+    },
   )
 
   const onPurchase = () => {

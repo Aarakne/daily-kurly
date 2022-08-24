@@ -247,10 +247,9 @@ const Posts: NextPage = () => {
         }
       }
 
-      console.log(form)
-
       try {
         const res = await api.post('/post', form)
+        alert('게시글이 등록되었습니다.')
         return res
       } catch (e) {
         console.log(e)
