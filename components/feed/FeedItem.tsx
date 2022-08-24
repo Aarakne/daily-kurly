@@ -10,7 +10,7 @@ import LikedIcon from '../../assets/heart-fill.svg'
 interface FeedItemProps {
   id: string
   image: string
-  liked: boolean
+  liked?: boolean
 }
 
 const Wrapper = styled.div`

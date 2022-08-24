@@ -91,18 +91,15 @@ const UsedProduct = ({ product, isRelated }: UsedProductProps) => {
     selectedProductsState,
   )
   const [checked, setChecked] = useState<boolean>(
-    !!selectedProducts.find((item) => item.id === product._id),
+    !!selectedProducts.find((item) => item._id === product._id),
   )
 
   const onCheck = () => {
     if (!checked) {
-      setSelectedProducts([
-        ...selectedProducts,
-        { id: product._id, image: product.image },
-      ])
+      setSelectedProducts([...selectedProducts, product])
     } else {
       setSelectedProducts(
-        selectedProducts.filter((item) => item.id !== product._id),
+        selectedProducts.filter((item) => item._id !== product._id),
       )
     }
     setChecked((prev) => !prev)
