@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import moment from 'moment'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useRecoilValue } from 'recoil'
 import Carousel from '../../components/public/Carousel'
 import Container from '../../components/public/Container'
@@ -11,6 +11,7 @@ import { fetchPostDetail } from '../../queries/posts'
 import { userState } from '../../stores/auth'
 import Image from 'next/image'
 import ProfileIcon from '../../assets/profile.svg'
+import api from '../../api'
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -144,13 +145,22 @@ const Posts: NextPage = () => {
   } = router
 
   const me = useRecoilValue(userState)
+  const queryClient = useQueryClient()
+
+  const { mutate: likePostToggle } = useMutation(
+    ['like-post'],
+    async () => await api.patch(`/post/like/${postId}`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['liked-posts'])
+      },
+    },
+  )
 
   const { data: post, isSuccess } = useQuery(
     ['fetctPostDetail', postId],
     () => fetchPostDetail(postId),
-    {
-      staleTime: 60 * 1000,
-    },
+    { enabled: !!postId, staleTime: 60 * 1000 },
   )
 
   const getCdnUrl = (imageUrl: string) => {
@@ -158,6 +168,11 @@ const Posts: NextPage = () => {
       's3://daily-kurly/',
       `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
     )
+  }
+
+  const onLike = (e: any) => {
+    e.stopPropagation()
+    likePostToggle()
   }
 
   return (
@@ -204,7 +219,7 @@ const Posts: NextPage = () => {
             </div>
 
             <PostLikeButtonContainer>
-              <PostLikeButton>❤️</PostLikeButton>
+              <PostLikeButton onClick={onLike}>❤️</PostLikeButton>
               <PostLikeCount>
                 {post.likeCount.toLocaleString('ko-KR')}
               </PostLikeCount>

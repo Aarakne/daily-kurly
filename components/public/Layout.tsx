@@ -21,7 +21,7 @@ const Top = styled.div`
   display: flex;
   align-items: center;
 
-  background-color: #5f0080;
+  /* background-color: #5f0080; */
 
   z-index: 999;
 
@@ -51,9 +51,7 @@ const Layout = ({ children }: LayoutProps) => {
     <Wrapper>
       <Top>
         <Link href="/">
-          <a>
-            <Logo />
-          </a>
+          <a>{/* <Logo /> */}</a>
         </Link>
       </Top>
       <Content>{children}</Content>
