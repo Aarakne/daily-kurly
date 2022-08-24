@@ -87,7 +87,7 @@ const CategorySelect = () => {
   const setSelectedCategory2 = useSetRecoilState(selectedCategory2State)
 
   useEffect(() => {
-    const category2s = category1s.find(
+    const category2s = category1s?.find(
       (item) => item.tag === selectedCategory1,
     )?.category2
     if (category2s) setSelectedCategory2s(category2s)
