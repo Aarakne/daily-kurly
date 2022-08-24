@@ -1,5 +1,6 @@
 import api from '../api'
 import { Post } from './posts'
+
 export interface Me {
   id: number
   name: string
