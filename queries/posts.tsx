@@ -8,6 +8,7 @@ export interface Post {
   images: string[]
   tags: string[]
   products: Product[]
+  createdAt: string
 }
 
 interface Content {

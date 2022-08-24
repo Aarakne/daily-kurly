@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import api from '../../api'
 import UnlikedIcon from '../../assets/heart-empty.svg'
 import LikedIcon from '../../assets/heart-fill.svg'
+import { getCdnUrl } from '../../lib/utils'
 
 interface FeedItemProps {
   id: string
@@ -44,15 +44,6 @@ const FeedItem = ({ id, image, liked }: FeedItemProps) => {
     },
   )
 
-  const imageUrl = useMemo(
-    () =>
-      image?.replace(
-        's3://daily-kurly/',
-        `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
-      ),
-    [image],
-  )
-
   const onClickItem = (e: any) => {
     e.preventDefault()
     router.push(`/posts/${id}`)
@@ -66,7 +57,7 @@ const FeedItem = ({ id, image, liked }: FeedItemProps) => {
   return (
     <Wrapper onClick={onClickItem}>
       <Image
-        src={imageUrl}
+        src={getCdnUrl(image)}
         width={100}
         height={100}
         layout="responsive"
