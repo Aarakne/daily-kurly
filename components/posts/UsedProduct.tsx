@@ -9,6 +9,7 @@ export interface ProductType {
   name: string
   brand: string
   image: string
+  sellingPrice: number
 }
 
 interface UsedProductProps {
@@ -53,10 +54,9 @@ const Brand = styled.div`
   padding-top: 10px;
 `
 
-// const Price = styled.div`
-//   color: red;
-
-// `
+const Price = styled.div`
+  color: red;
+`
 
 const LikeButtonContainer = styled.div`
   display: flex;
@@ -104,7 +104,7 @@ const UsedProduct = ({ product, isRelated }: UsedProductProps) => {
         <Info>
           <Name>{product.name}</Name>
           <Brand>{product.brand}</Brand>
-          {/* <Price>{product.sellingPrice}</Price> */}
+          <Price>{product.sellingPrice.toLocaleString('ko-KR')}</Price>
         </Info>
       </Content>
 
