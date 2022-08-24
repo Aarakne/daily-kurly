@@ -1,10 +1,7 @@
 import styled from '@emotion/styled'
-import { useMemo } from 'react'
-import { useQuery } from 'react-query'
 import { useRecoilValue } from 'recoil'
-import { fetchMyPosts } from '../../queries/posts'
-import { userState } from '../../stores/auth'
 import ProfileIcon from '../../assets/profile.svg'
+import { userState } from '../../stores/auth'
 
 interface ProfileProps {
   postCounts: number
@@ -15,9 +12,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  padding: 10px;
+  padding: 10px 20px 20px;
 
-  border-bottom: 3px solid gray;
+  border-bottom: 3px solid #e5e5e5;
 `
 
 const ProfileContainer = styled.div`
@@ -28,9 +25,8 @@ const ProfileContainer = styled.div`
 `
 
 const ProfileImageContainer = styled.div`
-  padding: 20px;
-
-  border: 2px solid lightgray;
+  padding: 7px;
+  border: 2px solid #e5e5e5;
   border-radius: 50px;
 `
 
@@ -40,14 +36,18 @@ const Content = styled.div`
 `
 
 const Name = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 `
 
 const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 10px;
+  align-items: center;
+
+  padding-top: 5px;
+
+  font-size: 14px;
 `
 
 const Profile = ({ postCounts, likeCounts }: ProfileProps) => {
@@ -60,11 +60,11 @@ const Profile = ({ postCounts, likeCounts }: ProfileProps) => {
           <ProfileIcon />
         </ProfileImageContainer>
         <Content>
-          <Name>{me?.name}</Name>
+          <Name>{me?.name || '닉네임'}</Name>
           <PostInfo>
             <div>게시글 {postCounts}</div>
-            <div>❤️ {likeCounts}</div>
-            <div>팔로우 ?? </div>
+            <div>좋아요 {likeCounts}</div>
+            <div>팔로우 2 </div>
           </PostInfo>
         </Content>
       </ProfileContainer>

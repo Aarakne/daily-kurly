@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { getCdnUrl } from '../../lib/utils'
 
 const Title = styled.div`
-  padding: 30px 0 0 20px;
+  padding: 20px;
 
   font-size: 18px;
   font-weight: bold;
@@ -51,7 +51,7 @@ const LikedProducts = () => {
   return (
     <>
       <Title>
-        {me?.name} 님이 {'❤️'}한 요리
+        {me?.name || '닉네임'}님이 {'❤️'}한 요리
       </Title>
       <LikedPostsContainer>
         {likedPosts?.map((post, index) => (

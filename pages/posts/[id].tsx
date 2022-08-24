@@ -24,7 +24,7 @@ const ProfileContainer = styled.div`
 `
 
 const ProfileImageContainer = styled.div`
-  padding: 20px;
+  padding: 5px;
 
   border: 2px solid lightgray;
   border-radius: 50px;
@@ -179,7 +179,7 @@ const Posts: NextPage = () => {
             </ProfileImageContainer>
             <Content>
               <Name>
-                {me?.name} <Grade>{me?.grade}</Grade>
+                {me?.name || '닉네임'} <Grade>{me?.grade}</Grade>
               </Name>
               <PostInfo>{moment(moment(post.createdAt)).fromNow()}</PostInfo>
             </Content>
