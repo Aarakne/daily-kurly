@@ -13,6 +13,7 @@ import Image from 'next/image'
 import ProfileIcon from '../../assets/profile.svg'
 import api from '../../api'
 import { getCdnUrl } from '../../lib/utils'
+import LikeIcon from '../../assets/heart-fill-white.svg'
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -83,7 +84,7 @@ const PostInfoContainer = styled.div`
 `
 
 const PostTitle = styled.div`
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
 `
 
@@ -115,8 +116,12 @@ const PostLikeButtonContainer = styled.div`
 `
 
 const PostLikeButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #5f0080;
 
@@ -125,13 +130,15 @@ const PostLikeButton = styled.button`
 
 const PostLikeCount = styled.div`
   color: #5f0080;
+  font-size: 14px;
+  padding-top: 5px;
 `
 
 const UsedProductTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
 
-  padding-left: 20px;
+  padding: 20px 20px 0;
 `
 
 const UsedProductContainer = styled.div`
@@ -139,16 +146,18 @@ const UsedProductContainer = styled.div`
   align-items: center;
   overflow: auto;
 
+  padding-top: 10px;
+
   &::-webkit-scrollbar {
     display: none;
   }
 `
 
 const UsedProductWrapper = styled.div`
-  padding: 20px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 `
 
 const Posts: NextPage = () => {
@@ -161,11 +170,11 @@ const Posts: NextPage = () => {
   const queryClient = useQueryClient()
 
   const { mutate: likePostToggle } = useMutation(
-    ['fetctPostDetail'],
+    ['fetctPostDetail', postId],
     async () => await api.patch(`/post/like/${postId}`),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['fetctPostDetail'])
+        queryClient.invalidateQueries(['fetctPostDetail', postId])
       },
     },
   )
@@ -225,7 +234,9 @@ const Posts: NextPage = () => {
             </div>
 
             <PostLikeButtonContainer>
-              <PostLikeButton onClick={onLike}>❤️</PostLikeButton>
+              <PostLikeButton onClick={onLike}>
+                <LikeIcon />
+              </PostLikeButton>
               <PostLikeCount>
                 {post.likeCount.toLocaleString('ko-KR')}
               </PostLikeCount>
