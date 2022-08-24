@@ -6,6 +6,7 @@ import { useMutation, useQuery } from 'react-query'
 import { fetchProduct, postPurchaseProduct } from '../../queries/products'
 import Image from 'next/image'
 import UnlikedIcon from '../../assets/heart-empty.svg'
+import { commaPrice } from '../../lib/utils'
 
 const IMAGE_WIDTH = 200
 const IMAGE_HEIGHT = 150
@@ -173,7 +174,7 @@ const Products: NextPage = () => {
           <Title>{product.name}</Title>
           <Price>
             <DiscountRate>{product.discountRate}%</DiscountRate>
-            <SellingPrice>{product.sellingPrice}</SellingPrice>
+            <SellingPrice>{commaPrice(product.sellingPrice)}</SellingPrice>
           </Price>
         </ProductInfo>
         <ProductInfo>
@@ -221,7 +222,7 @@ const Products: NextPage = () => {
               />
               <RelatedProductInfo>
                 <Name>{relatedProduct.name}</Name>
-                <Price>{relatedProduct.sellingPrice}</Price>
+                <Price>{commaPrice(relatedProduct.sellingPrice)}</Price>
               </RelatedProductInfo>
             </Box>
           </ProductInfo>
