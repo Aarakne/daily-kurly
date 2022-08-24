@@ -13,7 +13,7 @@ import KoreanFoodIcon from '../../assets/korean-food.png'
 import JapaneseFoodIcon from '../../assets/japanese-food.png'
 import ItalianFoodIcon from '../../assets/italian-food.png'
 import ChineseFoodIcon from '../../assets/chinese-food.png'
-import OthersIcon from '../../assets/three-dots.svg'
+import OthersIcon from '../../assets/three-dots.png'
 import Image from 'next/image'
 
 const IMAGE_SIZE = 80
@@ -126,15 +126,13 @@ const CategorySelect = () => {
           key={category.tag}
           onClick={() => onSelectCategory1(category.tag)}
         >
-          {getFoodIcon(category.tag) ? (
+          {getFoodIcon(category.tag) && (
             <Image
               src={getFoodIcon(category.tag)}
               width={IMAGE_SIZE}
               height={IMAGE_SIZE}
               alt={category.tag}
             />
-          ) : (
-            <OthersIcon />
           )}
           {category.tag}
         </Category1>
