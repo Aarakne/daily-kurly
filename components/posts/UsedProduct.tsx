@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-const IMAGE_SIZE = 100
+const IMAGE_SIZE = 80
 
 export interface ProductType {
   _id: string
@@ -20,6 +20,7 @@ interface UsedProductProps {
 const Wrapper = styled.div`
   position: relative;
   width: 300px;
+  height: 100%;
 
   display: flex;
   flex-shrink: 0;
@@ -46,16 +47,23 @@ const Info = styled.div`
 `
 
 const Name = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 `
 
 const Brand = styled.div`
-  padding-top: 10px;
+  padding-top: 5px;
+  font-size: 14px;
 `
 
 const Price = styled.div`
   color: red;
+`
+
+const ImageBox = styled.div`
+  width: ${IMAGE_SIZE}px;
+  height: ${IMAGE_SIZE}px;
+  position: relative;
 `
 
 const LikeButtonContainer = styled.div`
@@ -95,12 +103,15 @@ const UsedProduct = ({ product, isRelated }: UsedProductProps) => {
     >
       {isRelated && <RelatedTag>비슷한</RelatedTag>}
       <Content>
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={IMAGE_SIZE}
-          height={IMAGE_SIZE}
-        />
+        <ImageBox>
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={IMAGE_SIZE}
+            height={IMAGE_SIZE}
+            layout="fill"
+          />
+        </ImageBox>
         <Info>
           <Name>{product.name}</Name>
           <Brand>{product.brand}</Brand>

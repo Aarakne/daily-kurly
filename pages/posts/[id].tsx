@@ -13,6 +13,7 @@ import Image from 'next/image'
 import ProfileIcon from '../../assets/profile.svg'
 import api from '../../api'
 import { getCdnUrl } from '../../lib/utils'
+import LikeIcon from '../../assets/heart-fill-white.svg'
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -20,7 +21,7 @@ const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 10px;
+  padding: 20px;
 `
 
 const ProfileImageContainer = styled.div`
@@ -37,16 +38,22 @@ const Content = styled.div`
 `
 
 const Name = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `
 
 const PostInfo = styled.div`
   padding-top: 5px;
+
+  font-size: 13px;
 `
 
 const Grade = styled.span`
-  font-size: 15px;
+  font-size: 14px;
   color: #5f0080;
 `
 
@@ -54,7 +61,7 @@ const CarouselContainer = styled.div`
   position: relative;
   overflow: hidden;
 
-  padding: 0;
+  padding: 20px;
 `
 
 const CarouselItem = styled.div`
@@ -73,11 +80,11 @@ const PostInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  padding: 10px;
+  padding: 20px;
 `
 
 const PostTitle = styled.div`
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
 `
 
@@ -109,8 +116,12 @@ const PostLikeButtonContainer = styled.div`
 `
 
 const PostLikeButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #5f0080;
 
@@ -119,24 +130,34 @@ const PostLikeButton = styled.button`
 
 const PostLikeCount = styled.div`
   color: #5f0080;
+  font-size: 14px;
+  padding-top: 5px;
 `
 
 const UsedProductTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
 
-  padding-left: 10px;
+  padding: 20px 20px 0;
 `
 
 const UsedProductContainer = styled.div`
   display: flex;
+  align-items: center;
   overflow: auto;
 
-  padding: 10px;
+  padding-top: 10px;
 
   &::-webkit-scrollbar {
     display: none;
   }
+`
+
+const UsedProductWrapper = styled.div`
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `
 
 const Posts: NextPage = () => {
@@ -149,11 +170,11 @@ const Posts: NextPage = () => {
   const queryClient = useQueryClient()
 
   const { mutate: likePostToggle } = useMutation(
-    ['fetctPostDetail'],
+    ['fetctPostDetail', postId],
     async () => await api.patch(`/post/like/${postId}`),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['fetctPostDetail'])
+        queryClient.invalidateQueries(['fetctPostDetail', postId])
       },
     },
   )
@@ -213,7 +234,9 @@ const Posts: NextPage = () => {
             </div>
 
             <PostLikeButtonContainer>
-              <PostLikeButton onClick={onLike}>❤️</PostLikeButton>
+              <PostLikeButton onClick={onLike}>
+                <LikeIcon />
+              </PostLikeButton>
               <PostLikeCount>
                 {post.likeCount.toLocaleString('ko-KR')}
               </PostLikeCount>
@@ -221,12 +244,17 @@ const Posts: NextPage = () => {
           </PostInfoContainer>
 
           <UsedProductTitle>사용 상품</UsedProductTitle>
-          {post.products.map((product, index) => (
-            <UsedProductContainer key={index}>
-              <UsedProduct product={product} />
-              <UsedProduct product={product.relatedProduct} isRelated={true} />
-            </UsedProductContainer>
-          ))}
+          <UsedProductWrapper>
+            {post.products.map((product, index) => (
+              <UsedProductContainer key={index}>
+                <UsedProduct product={product} />
+                <UsedProduct
+                  product={product.relatedProduct}
+                  isRelated={true}
+                />
+              </UsedProductContainer>
+            ))}
+          </UsedProductWrapper>
         </>
       )}
     </Container>
