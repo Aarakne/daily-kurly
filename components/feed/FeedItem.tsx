@@ -72,9 +72,11 @@ const FeedItem = ({ id, image, liked }: FeedItemProps) => {
         layout="responsive"
         alt="feed item"
       />
-      <LikeButton onClick={onLike}>
-        {liked ? <LikedIcon /> : <UnlikedIcon />}
-      </LikeButton>
+      {liked !== undefined && (
+        <LikeButton onClick={onLike}>
+          {liked ? <LikedIcon /> : <UnlikedIcon />}
+        </LikeButton>
+      )}
     </Wrapper>
   )
 }
