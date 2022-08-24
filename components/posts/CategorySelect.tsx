@@ -115,7 +115,7 @@ const CategorySelect = () => {
       case '양식':
         return ItalianFoodIcon
       default:
-        return null
+        return OthersIcon
     }
   }
 
