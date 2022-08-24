@@ -58,6 +58,8 @@ const Brand = styled.div`
 
 const Price = styled.div`
   color: red;
+  padding-top: 2px;
+  font-size: 14px;
 `
 
 const ImageBox = styled.div`
