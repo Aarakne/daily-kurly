@@ -50,7 +50,7 @@ const LikedProducts = () => {
   const getCdnUrl = (imageUrl: string) => {
     return imageUrl.replace(
       's3://daily-kurly/',
-      'https://daily-kurly.s3.ap-northeast-2.amazonaws.com/',
+      `https://${process.env.NEXT_PUBLIC_AWS_S3_URL}/`,
     )
   }
 
