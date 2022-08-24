@@ -6,6 +6,11 @@ import { fetchMyPosts } from '../../queries/posts'
 import { userState } from '../../stores/auth'
 import ProfileIcon from '../../assets/profile.svg'
 
+interface ProfileProps {
+  postCounts: number
+  likeCounts?: number
+}
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -30,8 +35,7 @@ const ProfileImageContainer = styled.div`
 `
 
 const Content = styled.div`
-  flex: 1;
-
+  width: 70vw;
   margin-left: 20px;
 `
 
@@ -46,18 +50,8 @@ const PostInfo = styled.div`
   padding-top: 10px;
 `
 
-const Profile = () => {
+const Profile = ({ postCounts, likeCounts }: ProfileProps) => {
   const me = useRecoilValue(userState)
-  //   const me = { grade: 'purple', name: 'lee123' }
-
-  const { data: posts } = useQuery(['fetchMyPost'], fetchMyPosts, {
-    staleTime: 60 * 1000,
-  })
-
-  const likeCounts = useMemo(
-    () => posts?.reduce((sum, curPost) => sum + curPost.likeCount, 0),
-    [posts],
-  )
 
   return (
     <Wrapper>
@@ -68,7 +62,7 @@ const Profile = () => {
         <Content>
           <Name>{me?.name}</Name>
           <PostInfo>
-            <div>게시글 {posts?.length}</div>
+            <div>게시글 {postCounts}</div>
             <div>❤️ {likeCounts}</div>
             <div>팔로우 ?? </div>
           </PostInfo>

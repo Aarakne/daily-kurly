@@ -5,6 +5,9 @@ export interface Post {
   title: string
   likeCount: number
   content: Content
+  images: string[]
+  tags: string[]
+  products: Product[]
 }
 
 interface Content {
@@ -12,12 +15,18 @@ interface Content {
   images: string[]
 }
 
+interface Product {
+  _id: string
+  name: string
+  brand: string
+  image: string
+  relatedProduct: Product
+}
+
 export const fetchPostDetail = async (
   postId: string | string[] | undefined,
 ): Promise<Post> => {
-  const {
-    data: { post },
-  } = await api.get(`/posts/${postId}`)
+  const { data: post } = await api.get(`/post/${postId}`)
 
   return post
 }
