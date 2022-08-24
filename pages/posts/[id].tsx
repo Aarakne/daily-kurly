@@ -187,7 +187,7 @@ const Posts: NextPage = () => {
               <Name>
                 {me?.name} <Grade>{me?.grade}</Grade>
               </Name>
-              <PostInfo>{moment(moment('20220823')).fromNow()}</PostInfo>
+              <PostInfo>{moment(moment(post.createdAt)).fromNow()}</PostInfo>
             </Content>
           </ProfileContainer>
 
