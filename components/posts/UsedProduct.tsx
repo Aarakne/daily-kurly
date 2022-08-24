@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { selectedProductsState } from '../../stores/upload'
+import { useRouter } from 'next/router'
 
 const IMAGE_SIZE = 100
 
@@ -87,26 +85,14 @@ const RelatedTag = styled.div`
 `
 
 const UsedProduct = ({ product, isRelated }: UsedProductProps) => {
-  const [selectedProducts, setSelectedProducts] = useRecoilState(
-    selectedProductsState,
-  )
-  const [checked, setChecked] = useState<boolean>(
-    !!selectedProducts.find((item) => item._id === product._id),
-  )
-
-  const onCheck = () => {
-    if (!checked) {
-      setSelectedProducts([...selectedProducts, product])
-    } else {
-      setSelectedProducts(
-        selectedProducts.filter((item) => item._id !== product._id),
-      )
-    }
-    setChecked((prev) => !prev)
-  }
+  const router = useRouter()
 
   return (
-    <Wrapper onClick={onCheck}>
+    <Wrapper
+      onClick={() => {
+        router.push(`/products/${product._id}`)
+      }}
+    >
       {isRelated && <RelatedTag>비슷한</RelatedTag>}
       <Content>
         <Image
